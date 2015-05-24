@@ -26,9 +26,10 @@ void MyOnPaint(HDC hdc)
 	value++;
 	Graphics graphics(hdc);
 	Pen pen(Color(255,0,0,255));
-	//graphics.DrawLine(&pen,0,0,200,100);
+	graphics.DrawLine(&pen, 100, 0, 100, 700); 
+	graphics.DrawLine(&pen, 170, 0, 170, 700);
 
-	graphics.DrawRectangle(&pen,100+value,100,10, 20);
+	graphics.DrawRectangle(&pen, 100, 10 + value, 70, 90);
 }
 
 
