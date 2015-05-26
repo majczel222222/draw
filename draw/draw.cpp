@@ -25,48 +25,48 @@ void MyOnPaint(HDC hdc)
 {
 	value++;
 	Graphics graphics(hdc);
-	SolidBrush p_pietro(Color::Green);
-	Font font(&FontFamily(L"TimesNewRoman"), 40);
+	SolidBrush p_pietro(Color::Brown);
+	Font font(&FontFamily(L"Arial"), 40);
 	Pen pen_winda(Color(255, 255, 0, 0), 3); 
 	Pen pen_sciana(Color(255, 0, 0, 0), 3);
 	Pen pen_lina(Color(255, 0, 0, 255), 2);
 	Pen pen_pietro(Color(255, 0, 0, 255), 9);
 
-	graphics.DrawLine(&pen_sciana, 97, 0, 97, 700); 
-	graphics.DrawLine(&pen_sciana, 173, 0, 173, 700);
-	graphics.DrawLine(&pen_lina, 135, 0 , 135, 10+value);
+	graphics.DrawLine(&pen_sciana, 97, 0, 97, 676.5); 
+	graphics.DrawLine(&pen_sciana, 158, 0, 158, 676.5);
+	graphics.DrawLine(&pen_lina, 127.5, 0 , 127.5, 10+value);
 
-	graphics.DrawLine(&pen_pietro, 47, 4.5, 223, 4.5);
+	graphics.DrawLine(&pen_pietro, 45, 4.5, 210, 4.5);
 
-	graphics.DrawString(L"6", -1, &font, PointF(50, 80), &p_pietro);
-	graphics.DrawLine(&pen_pietro, 50, 102.5, 100, 102.5);
-	graphics.DrawLine(&pen_pietro, 170, 102.5, 220, 102.5);
+	graphics.DrawString(L"6", -1, &font, PointF(45, 42), &p_pietro);
+	graphics.DrawLine(&pen_pietro, 45, 100.5, 97, 100.5);
+	graphics.DrawLine(&pen_pietro, 158, 100.5, 210, 100.5);
 
-	graphics.DrawString(L"5", -1, &font, PointF(50, 80), &p_pietro);
-	graphics.DrawLine(&pen_pietro, 50, 200.5, 100, 200.5);
-	graphics.DrawLine(&pen_pietro, 170, 200.5, 220, 200.5);
+	graphics.DrawString(L"5", -1, &font, PointF(45, 138), &p_pietro);
+	graphics.DrawLine(&pen_pietro, 45, 196.5, 97, 196.5);
+	graphics.DrawLine(&pen_pietro, 158, 196.5, 210, 196.5);
 
-	graphics.DrawString(L"4", -1, &font, PointF(50, 190), &p_pietro);
-	graphics.DrawLine(&pen_pietro, 50, 298.5, 100, 298.5);
-	graphics.DrawLine(&pen_pietro, 170, 298.5, 220, 298.5);
+	graphics.DrawString(L"4", -1, &font, PointF(45, 234), &p_pietro);
+	graphics.DrawLine(&pen_pietro, 45, 292.5, 97, 292.5);
+	graphics.DrawLine(&pen_pietro, 158, 292.5, 210, 292.5);
 
-	graphics.DrawString(L"3", -1, &font, PointF(50, 300), &p_pietro);
-	graphics.DrawLine(&pen_pietro, 50, 396.5, 100, 396.5);
-	graphics.DrawLine(&pen_pietro, 170, 396.5, 220, 396.5);
+	graphics.DrawString(L"3", -1, &font, PointF(45, 330), &p_pietro);
+	graphics.DrawLine(&pen_pietro, 45, 388.5, 97, 388.5);
+	graphics.DrawLine(&pen_pietro, 158, 388.5, 210, 388.5);
 
-	graphics.DrawString(L"2", -1, &font, PointF(50, 410), &p_pietro);
-	graphics.DrawLine(&pen_pietro, 50, 494.5, 100, 494.5);
-	graphics.DrawLine(&pen_pietro, 170, 494.5, 220, 494.5);
+	graphics.DrawString(L"2", -1, &font, PointF(45, 426), &p_pietro);
+	graphics.DrawLine(&pen_pietro, 45, 484.5, 97, 484.5);
+	graphics.DrawLine(&pen_pietro, 158, 484.5, 210, 484.5);
 
-	graphics.DrawString(L"1", -1, &font, PointF(50, 520), &p_pietro);
-	graphics.DrawLine(&pen_pietro, 50, 592.5, 100, 592.5);
-	graphics.DrawLine(&pen_pietro, 170, 592.5, 220, 592.5);
+	graphics.DrawString(L"1", -1, &font, PointF(45, 522), &p_pietro);
+	graphics.DrawLine(&pen_pietro, 45, 580.5, 97, 580.5);
+	graphics.DrawLine(&pen_pietro, 158, 580.5, 210, 580.5);
 
-	graphics.DrawString(L"P", -1, &font, PointF(50, 630), &p_pietro);
-	graphics.DrawLine(&pen_pietro, 47, 690.5, 223, 690.5);
+	graphics.DrawString(L"P", -1, &font, PointF(45, 618), &p_pietro);
+	graphics.DrawLine(&pen_pietro, 45, 676.5, 210, 676.5);
 
 
-	graphics.DrawRectangle(&pen_winda, 100, 10 + value, 70, 90);
+	graphics.DrawRectangle(&pen_winda, 100, 10 + value, 55, 70);
 }
 
 
