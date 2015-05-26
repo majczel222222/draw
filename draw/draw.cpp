@@ -26,8 +26,8 @@ void MyOnPaint(HDC hdc)
 	value++;
 	Graphics graphics(hdc);
 	Pen pen(Color(255,0,0,255));
-	graphics.DrawLine(&pen, 100, 0, 100, 10); 
-	graphics.DrawLine(&pen, 170, 0, 170, 10);
+	graphics.DrawLine(&pen, 100, 0, 100, 700); 
+	graphics.DrawLine(&pen, 170, 0, 170, 700);
 	graphics.DrawLine(&pen, 135, 0 , 135, 10+value);
 
 
