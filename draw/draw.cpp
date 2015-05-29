@@ -30,9 +30,7 @@ HWND ButtonP, Button1, Button2, Button3, Button4, Button5, Button6;
 HWND hWnd;
 HWND ButtonP_panel, Button1_panel, Button2_panel, Button3_panel, Button4_panel, Button5_panel, Button6_panel;
 
-RECT drawArea1 = { 0, 0, 150, 200 };
-RECT drawArea2 = { 50, 400, 650, 422 };
-
+RECT drawArea1 = { 97, 8, 158, 672 };
 
 void MyOnPaint(HDC hdc)
 {   
