@@ -19,7 +19,7 @@ INT value = 590;
 queue  <int> kolejnosc_pieter;
 int kolejnosc;
 INT x = 0;
-int liczba_osob_w_windzie = 0;
+int liczba_osob_w_windzie = 1;
 int ile_osob_wsiada = 0;
 
 // Forward declarations of functions included in this code module:
@@ -47,11 +47,26 @@ void rysuj_czlowieka(HDC hdc)
 	}
 }
 
+void poczatek(HDC hdc, LPARAM lParam){
+	Graphics graphics(hdc);
+	Pen pen_czlowiek(Color(255, 255, 0, 0), 5);
+	
+
+	if ((HWND)lParam == ButtonP || (HWND)lParam == Button1 || (HWND)lParam == Button2 || (HWND)lParam == Button3 || (HWND)lParam == Button4
+		|| (HWND)lParam == Button5 || (HWND)lParam == Button6){
+		liczba_osob_w_windzie = (rand() % 8) + 1;
+		graphics.DrawRectangle(&pen_czlowiek, 135, 75, 4, 8);
+	}
+	
+
+}
+
 void wysiadanie(HDC hdc, LPARAM lParam)
 {
 	if ((HWND)lParam == ButtonP_panel || (HWND)lParam == Button1_panel || (HWND)lParam == Button2_panel || (HWND)lParam == Button3_panel || (HWND)lParam == Button4_panel
 		|| (HWND)lParam == Button5_panel || (HWND)lParam == Button6_panel){
-		liczba_osob_w_windzie = liczba_osob_w_windzie - rand()%liczba_osob_w_windzie;
+		if (rand() % liczba_osob_w_windzie == 0){ liczba_osob_w_windzie = liczba_osob_w_windzie - 1; }
+		else{ liczba_osob_w_windzie = liczba_osob_w_windzie - rand() % liczba_osob_w_windzie; };
 	}
 	
 }
@@ -62,16 +77,15 @@ void wsiadanie(HDC hdc, LPARAM lParam)
 	SolidBrush napis(Color::RoyalBlue);
 	Font l_osob(&FontFamily(L"Arial"), 25);
 
-	ile_osob_wsiada = 0;
-	if ((HWND)lParam == Button0_cz){ ile_osob_wsiada = 0; }
-	else if ((HWND)lParam == Button1_cz){ ile_osob_wsiada = 1; }
-	else if ((HWND)lParam == Button2_cz){ ile_osob_wsiada = 2; }
-	else if ((HWND)lParam == Button3_cz){ ile_osob_wsiada = 3; }
-	else if ((HWND)lParam == Button4_cz){ ile_osob_wsiada = 4; }
-	else if ((HWND)lParam == Button5_cz){ ile_osob_wsiada = 5; }
-	else if ((HWND)lParam == Button6_cz){ ile_osob_wsiada = 6; }
-	else if ((HWND)lParam == Button7_cz){ ile_osob_wsiada = 7; }
-	else if ((HWND)lParam == Button8_cz){ ile_osob_wsiada = 8; };
+	if ((HWND)lParam == Button0_cz) ile_osob_wsiada = 0; 
+	else if ((HWND)lParam == Button1_cz) ile_osob_wsiada = 1; 
+	else if ((HWND)lParam == Button2_cz) ile_osob_wsiada = 2; 
+	else if ((HWND)lParam == Button3_cz) ile_osob_wsiada = 3; 
+	else if ((HWND)lParam == Button4_cz) ile_osob_wsiada = 4; 
+	else if ((HWND)lParam == Button5_cz) ile_osob_wsiada = 5; 
+	else if ((HWND)lParam == Button6_cz) ile_osob_wsiada = 6; 
+	else if ((HWND)lParam == Button7_cz) ile_osob_wsiada = 7; 
+	else  ile_osob_wsiada = 8;
 
 	if ((HWND)lParam == ButtonP || (HWND)lParam == Button1 || (HWND)lParam == Button2 || (HWND)lParam == Button3 || (HWND)lParam == Button4
 		|| (HWND)lParam == Button5 || (HWND)lParam == Button6){
@@ -155,10 +169,14 @@ void MyOnPaint(HDC hdc, LPARAM lParam)
 	graphics.DrawString(L"Max. liczba osób w windzie: 8", -1, &l_osob, PointF(290, 600), &napis);
 	graphics.DrawString(L"Ile osób wsiada?", -1, &n_napis, PointF(630, 50), &napis);
 
-	
-	wysiadanie(hdc, lParam);	
-	wsiadanie(hdc, lParam);
+	poczatek(hdc, lParam);
 	rysuj_czlowieka(hdc);
+	while (liczba_osob_w_windzie != 0){
+		wysiadanie(hdc, lParam);
+		rysuj_czlowieka(hdc);
+		wsiadanie(hdc, lParam);
+		rysuj_czlowieka(hdc);
+	}
 	
 
 }
