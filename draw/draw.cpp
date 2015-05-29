@@ -3,6 +3,9 @@
 
 #include "stdafx.h"
 #include "draw.h"
+#include <queue>;
+#include <Windows.h>;
+using namespace std;
 
 #define MAX_LOADSTRING 100
 #define TMR_1 1
@@ -12,61 +15,87 @@ HINSTANCE hInst;								// current instance
 TCHAR szTitle[MAX_LOADSTRING];					// The title bar text
 TCHAR szWindowClass[MAX_LOADSTRING];			// the main window class name
 
-INT value;
+INT value = 590;
+queue  <int> kolejnosc_pieter;
+int kolejnosc;
+INT x = 0;
 
 // Forward declarations of functions included in this code module:
 ATOM				MyRegisterClass(HINSTANCE hInstance);
 BOOL				InitInstance(HINSTANCE, int);
 LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK	About(HWND, UINT, WPARAM, LPARAM);
+HWND ButtonP, Button1, Button2, Button3, Button4, Button5, Button6;
+HWND hWnd;
 
 
 void MyOnPaint(HDC hdc)
-{
-	value++;
+{   
+
+	if (!kolejnosc_pieter.empty())
+	{
+		if (value < ((kolejnosc_pieter.front() * 96) + 14))  value++;
+		if (value > ((kolejnosc_pieter.front() * 96) + 14))  value--;
+		if (value == ((kolejnosc_pieter.front() * 96) + 14))
+		{
+			x=0;
+			if (value < ((kolejnosc_pieter.front() * 96) + 14) && x == 0) value--;
+			if (value > ((kolejnosc_pieter.front() * 96) + 14) && x == 0) value++;
+			if (x==0)
+			{
+				kolejnosc_pieter.pop();
+			}
+		}
+	}
+     
+	
 	Graphics graphics(hdc);
 	SolidBrush p_pietro(Color::Brown);
 	Font font(&FontFamily(L"Arial"), 40);
 	Pen pen_winda(Color(255, 255, 0, 0), 3); 
 	Pen pen_sciana(Color(255, 0, 0, 0), 3);
 	Pen pen_lina(Color(255, 0, 0, 255), 2);
-	Pen pen_pietro(Color(255, 0, 0, 255), 9);
+	Pen pen_pietro(Color(255, 0, 0, 255), 8);
 
-	graphics.DrawLine(&pen_sciana, 97, 0, 97, 676.5); 
-	graphics.DrawLine(&pen_sciana, 158, 0, 158, 676.5);
-	graphics.DrawLine(&pen_lina, 127.5, 0 , 127.5, 10+value);
+	graphics.DrawLine(&pen_sciana, 97, 0, 97, 674); 
+	graphics.DrawLine(&pen_sciana, 158, 0, 158, 674);
+    graphics.DrawLine(&pen_lina, 127, 8, 127, 10+value); 
+	
 
-	graphics.DrawLine(&pen_pietro, 45, 4.5, 210, 4.5);
+	graphics.DrawLine(&pen_pietro, 45, 4, 210, 4);
 
 	graphics.DrawString(L"6", -1, &font, PointF(45, 42), &p_pietro);
-	graphics.DrawLine(&pen_pietro, 45, 100.5, 97, 100.5);
-	graphics.DrawLine(&pen_pietro, 158, 100.5, 210, 100.5);
+	graphics.DrawLine(&pen_pietro, 45, 100, 97, 100);
+	graphics.DrawLine(&pen_pietro, 158, 100, 210, 100);
 
 	graphics.DrawString(L"5", -1, &font, PointF(45, 138), &p_pietro);
-	graphics.DrawLine(&pen_pietro, 45, 196.5, 97, 196.5);
-	graphics.DrawLine(&pen_pietro, 158, 196.5, 210, 196.5);
+	graphics.DrawLine(&pen_pietro, 45, 196, 97, 196);
+	graphics.DrawLine(&pen_pietro, 158, 196, 210, 196);
 
 	graphics.DrawString(L"4", -1, &font, PointF(45, 234), &p_pietro);
-	graphics.DrawLine(&pen_pietro, 45, 292.5, 97, 292.5);
-	graphics.DrawLine(&pen_pietro, 158, 292.5, 210, 292.5);
+	graphics.DrawLine(&pen_pietro, 45, 292, 97, 292);
+	graphics.DrawLine(&pen_pietro, 158, 292, 210, 292);
 
 	graphics.DrawString(L"3", -1, &font, PointF(45, 330), &p_pietro);
-	graphics.DrawLine(&pen_pietro, 45, 388.5, 97, 388.5);
-	graphics.DrawLine(&pen_pietro, 158, 388.5, 210, 388.5);
+	graphics.DrawLine(&pen_pietro, 45, 388, 97, 388);
+	graphics.DrawLine(&pen_pietro, 158, 388, 210, 388);
 
 	graphics.DrawString(L"2", -1, &font, PointF(45, 426), &p_pietro);
-	graphics.DrawLine(&pen_pietro, 45, 484.5, 97, 484.5);
-	graphics.DrawLine(&pen_pietro, 158, 484.5, 210, 484.5);
+	graphics.DrawLine(&pen_pietro, 45, 484, 97, 484);
+	graphics.DrawLine(&pen_pietro, 158, 484, 210, 484);
 
 	graphics.DrawString(L"1", -1, &font, PointF(45, 522), &p_pietro);
-	graphics.DrawLine(&pen_pietro, 45, 580.5, 97, 580.5);
-	graphics.DrawLine(&pen_pietro, 158, 580.5, 210, 580.5);
+	graphics.DrawLine(&pen_pietro, 45, 580, 97, 580);
+	graphics.DrawLine(&pen_pietro, 158, 580, 210, 580);
 
 	graphics.DrawString(L"P", -1, &font, PointF(45, 618), &p_pietro);
-	graphics.DrawLine(&pen_pietro, 45, 676.5, 210, 676.5);
+	graphics.DrawLine(&pen_pietro, 45, 676, 210, 676);
 
 
-	graphics.DrawRectangle(&pen_winda, 100, 10 + value, 55, 70);
+	graphics.DrawRectangle(&pen_winda, 100, 10+value, 55, 70);
+
+    
+	
 }
 
 
@@ -90,7 +119,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	MSG msg;
 	HACCEL hAccelTable;
 
-	value= 10;
+	
 
 	GdiplusStartupInput gdiplusStartupInput;
 	ULONG_PTR           gdiplusToken;
@@ -106,6 +135,31 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	{
 		return FALSE;
 	}
+
+
+	ButtonP = CreateWindowEx(WS_EX_CLIENTEDGE, "BUTTON", "P", WS_CHILD | WS_VISIBLE,
+		165, 625, 45, 45, hWnd, NULL, hInstance, NULL);
+
+	Button1 = CreateWindowEx(WS_EX_CLIENTEDGE, "BUTTON", "1", WS_CHILD | WS_VISIBLE,
+		165, 529, 45, 45, hWnd, NULL, hInstance, NULL);
+
+	Button2 = CreateWindowEx(WS_EX_CLIENTEDGE, "BUTTON", "2", WS_CHILD | WS_VISIBLE,
+		165, 433, 45, 45, hWnd, NULL, hInstance, NULL);
+
+	Button3 = CreateWindowEx(WS_EX_CLIENTEDGE, "BUTTON", "3", WS_CHILD | WS_VISIBLE,
+		165, 337, 45, 45, hWnd, NULL, hInstance, NULL);
+
+	Button4 = CreateWindowEx(WS_EX_CLIENTEDGE, "BUTTON", "4", WS_CHILD | WS_VISIBLE,
+		165, 241, 45, 45, hWnd, NULL, hInstance, NULL);
+
+	Button5 = CreateWindowEx(WS_EX_CLIENTEDGE, "BUTTON", "5", WS_CHILD | WS_VISIBLE,
+		165, 145, 45, 45, hWnd, NULL, hInstance, NULL);
+
+	Button6 = CreateWindowEx(WS_EX_CLIENTEDGE, "BUTTON", "6", WS_CHILD | WS_VISIBLE,
+		165, 49, 45, 45, hWnd, NULL, hInstance, NULL);
+
+
+
 
 	hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_DRAW));
 
@@ -172,7 +226,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-   HWND hWnd;
+ 
 
    hInst = hInstance; // Store instance handle in our global variable
 
@@ -215,6 +269,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_COMMAND:
 		wmId    = LOWORD(wParam);
 		wmEvent = HIWORD(wParam);
+		if ((HWND)lParam == ButtonP) kolejnosc_pieter.push(6);
+		if ((HWND)lParam == Button1) kolejnosc_pieter.push(5);
+		if ((HWND)lParam == Button2) kolejnosc_pieter.push(4);
+		if ((HWND)lParam == Button3) kolejnosc_pieter.push(3);
+		if ((HWND)lParam == Button4) kolejnosc_pieter.push(2);
+		if ((HWND)lParam == Button5) kolejnosc_pieter.push(1);
+		if ((HWND)lParam == Button6) kolejnosc_pieter.push(0);
 		// Parse the menu selections:
 		switch (wmId)
 		{
