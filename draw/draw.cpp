@@ -28,6 +28,9 @@ INT_PTR CALLBACK	About(HWND, UINT, WPARAM, LPARAM);
 HWND ButtonP, Button1, Button2, Button3, Button4, Button5, Button6;
 HWND hWnd;
 
+RECT drawArea1 = { 0, 0, 150, 200 };
+RECT drawArea2 = { 50, 400, 650, 422 };
+
 
 void MyOnPaint(HDC hdc)
 {   
@@ -178,7 +181,16 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	return (int) msg.wParam;
 }
 
-
+void repaintWindow(HWND hWnd, HDC &hdc, PAINTSTRUCT &ps, RECT *drawArea)
+{
+	if (drawArea == NULL)
+		InvalidateRect(hWnd, NULL, TRUE); // repaint all
+	else
+		InvalidateRect(hWnd, drawArea, TRUE); //repaint drawArea
+	hdc = BeginPaint(hWnd, &ps);
+	MyOnPaint(hdc);
+	EndPaint(hWnd, &ps);
+}
 
 //
 //  FUNCTION: MyRegisterClass()
@@ -304,10 +316,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			case TMR_1:
 				//force window to repaint
-				InvalidateRect(hWnd, NULL, TRUE);
-				hdc = BeginPaint(hWnd, &ps);
-				MyOnPaint(hdc);
-				EndPaint(hWnd, &ps);
+				repaintWindow(hWnd, hdc, ps, &drawArea1);
 			break;
 		}
 
