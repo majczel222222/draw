@@ -166,7 +166,7 @@ void MyOnPaint(HDC hdc, LPARAM lParam)
 
 	graphics.DrawRectangle(&pen_winda, 100, 10 + value, 55, 70);
 	graphics.DrawString(L"Panel", -1, &n_napis, PointF(420, 50), &napis);
-	graphics.DrawString(L"Max. liczba osób w windzie: 8", -1, &l_osob, PointF(290, 600), &napis);
+	graphics.DrawString(L"Max. liczba osob w windzie: 8", -1, &l_osob, PointF(290, 600), &napis);
 	graphics.DrawString(L"Ile osób wsiada?", -1, &n_napis, PointF(630, 50), &napis);
 
 	poczatek(hdc, lParam);
