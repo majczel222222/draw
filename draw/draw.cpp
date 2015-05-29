@@ -20,6 +20,7 @@ queue  <int> kolejnosc_pieter;
 int kolejnosc;
 INT x = 0;
 int liczba_osob_w_windzie = 0;
+int ile_osob_wsiada = 0;
 
 // Forward declarations of functions included in this code module:
 ATOM				MyRegisterClass(HINSTANCE hInstance);
@@ -45,7 +46,30 @@ void rysuj_czlowieka(HDC hdc)
 	}
 }
 
-void MyOnPaint(HDC hdc)
+void wysiadanie(HDC hdc, LPARAM lParam)
+{
+	if ((HWND)lParam == ButtonP_panel || (HWND)lParam == Button1_panel || (HWND)lParam == Button2_panel || (HWND)lParam == Button3_panel || (HWND)lParam == Button4_panel
+		|| (HWND)lParam == Button5_panel || (HWND)lParam == Button6_panel){
+		liczba_osob_w_windzie = liczba_osob_w_windzie - rand()%liczba_osob_w_windzie;
+	}
+	
+}
+
+void wsiadanie(HDC hdc, LPARAM lParam)
+{
+	Graphics graphics(hdc);
+	SolidBrush napis(Color::RoyalBlue);
+	Font l_osob(&FontFamily(L"Arial"), 25);
+
+	if ((HWND)lParam == ButtonP || (HWND)lParam == Button1 || (HWND)lParam == Button2 || (HWND)lParam == Button3 || (HWND)lParam == Button4
+		|| (HWND)lParam == Button5 || (HWND)lParam == Button6 && (liczba_osob_w_windzie + ile_osob_wsiada) <= 8){
+
+		liczba_osob_w_windzie = liczba_osob_w_windzie + ile_osob_wsiada;
+	}
+	else graphics.DrawString(L"SCHODAMI KURWA!!!", -1, &l_osob, PointF(290, 400), &napis);
+}
+
+void MyOnPaint(HDC hdc, LPARAM lParam)
 {
 
 	if (!kolejnosc_pieter.empty())
@@ -116,8 +140,10 @@ void MyOnPaint(HDC hdc)
 	graphics.DrawString(L"Panel", -1, &n_napis, PointF(420, 50), &napis);
 	graphics.DrawString(L"Max. liczba osób w windzie: 8", -1, &l_osob, PointF(290, 600), &napis);
 
-
+	wsiadanie(hdc, lParam);
+	wysiadanie(hdc, lParam);
 	rysuj_czlowieka(hdc);
+	
 
 }
 
@@ -220,14 +246,14 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	return (int) msg.wParam;
 }
 
-void repaintWindow(HWND hWnd, HDC &hdc, PAINTSTRUCT &ps, RECT *drawArea)
+void repaintWindow(HWND hWnd, HDC &hdc, PAINTSTRUCT &ps, RECT *drawArea, LPARAM lParam)
 {
 	if (drawArea == NULL)
 		InvalidateRect(hWnd, NULL, TRUE); // repaint all
 	else
 		InvalidateRect(hWnd, drawArea, TRUE); //repaint drawArea
 	hdc = BeginPaint(hWnd, &ps);
-	MyOnPaint(hdc);
+	MyOnPaint(hdc, lParam);
 	EndPaint(hWnd, &ps);
 }
 
@@ -350,7 +376,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
 		// TODO: Add any drawing code here...
-		MyOnPaint(hdc);
+		MyOnPaint(hdc, lParam);
 		EndPaint(hWnd, &ps);
 		break;
 	case WM_DESTROY:
@@ -362,7 +388,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			case TMR_1:
 				//force window to repaint
-				repaintWindow(hWnd, hdc, ps, &drawArea1);
+				repaintWindow(hWnd, hdc, ps, &drawArea1, lParam);
 			break;
 		}
 
