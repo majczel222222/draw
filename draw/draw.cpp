@@ -31,8 +31,11 @@ HWND hWnd;
 HWND ButtonP_panel, Button1_panel, Button2_panel, Button3_panel, Button4_panel, Button5_panel, Button6_panel;
 
 RECT drawArea1 = { 97, 8, 158, 672 };
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> origin/master
 
 void MyOnPaint(HDC hdc)
 {
