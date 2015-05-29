@@ -27,6 +27,7 @@ LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK	About(HWND, UINT, WPARAM, LPARAM);
 HWND ButtonP, Button1, Button2, Button3, Button4, Button5, Button6;
 HWND hWnd;
+HWND ButtonP_panel, Button1_panel, Button2_panel, Button3_panel, Button4_panel, Button5_panel, Button6_panel;
 
 RECT drawArea1 = { 0, 0, 150, 200 };
 RECT drawArea2 = { 50, 400, 650, 422 };
@@ -54,7 +55,9 @@ void MyOnPaint(HDC hdc)
 	
 	Graphics graphics(hdc);
 	SolidBrush p_pietro(Color::Brown);
-	Font font(&FontFamily(L"Arial"), 40);
+	SolidBrush napis(Color::RoyalBlue);
+	Font numery(&FontFamily(L"Arial"), 40);
+	Font n_napis(&FontFamily(L"Arial"), 35);
 	Pen pen_winda(Color(255, 255, 0, 0), 3); 
 	Pen pen_sciana(Color(255, 0, 0, 0), 3);
 	Pen pen_lina(Color(255, 0, 0, 255), 2);
@@ -67,36 +70,36 @@ void MyOnPaint(HDC hdc)
 
 	graphics.DrawLine(&pen_pietro, 45, 4, 210, 4);
 
-	graphics.DrawString(L"6", -1, &font, PointF(45, 42), &p_pietro);
+	graphics.DrawString(L"6", -1, &numery, PointF(45, 42), &p_pietro);
 	graphics.DrawLine(&pen_pietro, 45, 100, 97, 100);
 	graphics.DrawLine(&pen_pietro, 158, 100, 210, 100);
 
-	graphics.DrawString(L"5", -1, &font, PointF(45, 138), &p_pietro);
+	graphics.DrawString(L"5", -1, &numery, PointF(45, 138), &p_pietro);
 	graphics.DrawLine(&pen_pietro, 45, 196, 97, 196);
 	graphics.DrawLine(&pen_pietro, 158, 196, 210, 196);
 
-	graphics.DrawString(L"4", -1, &font, PointF(45, 234), &p_pietro);
+	graphics.DrawString(L"4", -1, &numery, PointF(45, 234), &p_pietro);
 	graphics.DrawLine(&pen_pietro, 45, 292, 97, 292);
 	graphics.DrawLine(&pen_pietro, 158, 292, 210, 292);
 
-	graphics.DrawString(L"3", -1, &font, PointF(45, 330), &p_pietro);
+	graphics.DrawString(L"3", -1, &numery, PointF(45, 330), &p_pietro);
 	graphics.DrawLine(&pen_pietro, 45, 388, 97, 388);
 	graphics.DrawLine(&pen_pietro, 158, 388, 210, 388);
 
-	graphics.DrawString(L"2", -1, &font, PointF(45, 426), &p_pietro);
+	graphics.DrawString(L"2", -1, &numery, PointF(45, 426), &p_pietro);
 	graphics.DrawLine(&pen_pietro, 45, 484, 97, 484);
 	graphics.DrawLine(&pen_pietro, 158, 484, 210, 484);
 
-	graphics.DrawString(L"1", -1, &font, PointF(45, 522), &p_pietro);
+	graphics.DrawString(L"1", -1, &numery, PointF(45, 522), &p_pietro);
 	graphics.DrawLine(&pen_pietro, 45, 580, 97, 580);
 	graphics.DrawLine(&pen_pietro, 158, 580, 210, 580);
 
-	graphics.DrawString(L"P", -1, &font, PointF(45, 618), &p_pietro);
+	graphics.DrawString(L"P", -1, &numery, PointF(45, 618), &p_pietro);
 	graphics.DrawLine(&pen_pietro, 45, 676, 210, 676);
 
 
 	graphics.DrawRectangle(&pen_winda, 100, 10+value, 55, 70);
-
+	graphics.DrawString(L"Panel", -1, &n_napis, PointF(420, 50), &napis);
     
 	
 }
@@ -140,27 +143,47 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	}
 
 
-	ButtonP = CreateWindowEx(WS_EX_CLIENTEDGE, "BUTTON", "P", WS_CHILD | WS_VISIBLE,
+	ButtonP = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "P", WS_CHILD | WS_VISIBLE,
 		165, 625, 45, 45, hWnd, NULL, hInstance, NULL);
 
-	Button1 = CreateWindowEx(WS_EX_CLIENTEDGE, "BUTTON", "1", WS_CHILD | WS_VISIBLE,
+	Button1 = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "1", WS_CHILD | WS_VISIBLE,
 		165, 529, 45, 45, hWnd, NULL, hInstance, NULL);
 
-	Button2 = CreateWindowEx(WS_EX_CLIENTEDGE, "BUTTON", "2", WS_CHILD | WS_VISIBLE,
+	Button2 = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "2", WS_CHILD | WS_VISIBLE,
 		165, 433, 45, 45, hWnd, NULL, hInstance, NULL);
 
-	Button3 = CreateWindowEx(WS_EX_CLIENTEDGE, "BUTTON", "3", WS_CHILD | WS_VISIBLE,
+	Button3 = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "3", WS_CHILD | WS_VISIBLE,
 		165, 337, 45, 45, hWnd, NULL, hInstance, NULL);
 
-	Button4 = CreateWindowEx(WS_EX_CLIENTEDGE, "BUTTON", "4", WS_CHILD | WS_VISIBLE,
+	Button4 = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "4", WS_CHILD | WS_VISIBLE,
 		165, 241, 45, 45, hWnd, NULL, hInstance, NULL);
 
-	Button5 = CreateWindowEx(WS_EX_CLIENTEDGE, "BUTTON", "5", WS_CHILD | WS_VISIBLE,
+	Button5 = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "5", WS_CHILD | WS_VISIBLE,
 		165, 145, 45, 45, hWnd, NULL, hInstance, NULL);
 
-	Button6 = CreateWindowEx(WS_EX_CLIENTEDGE, "BUTTON", "6", WS_CHILD | WS_VISIBLE,
+	Button6 = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "6", WS_CHILD | WS_VISIBLE,
 		165, 49, 45, 45, hWnd, NULL, hInstance, NULL);
 
+	ButtonP_panel = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "P", WS_CHILD | WS_VISIBLE,
+		445, 110, 40, 40, hWnd, NULL, hInstance, NULL);
+
+	Button1_panel = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "1", WS_CHILD | WS_VISIBLE,
+		485, 110, 40, 40, hWnd, NULL, hInstance, NULL);
+
+	Button2_panel = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "2", WS_CHILD | WS_VISIBLE,
+		445, 150, 40, 40, hWnd, NULL, hInstance, NULL);
+
+	Button3_panel = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "3", WS_CHILD | WS_VISIBLE,
+		485, 150, 40, 40, hWnd, NULL, hInstance, NULL);
+
+	Button4_panel = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "4", WS_CHILD | WS_VISIBLE,
+		445, 190, 40, 40, hWnd, NULL, hInstance, NULL);
+
+	Button5_panel = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "5", WS_CHILD | WS_VISIBLE,
+		485, 190, 40, 40, hWnd, NULL, hInstance, NULL);
+
+	Button6_panel = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "6", WS_CHILD | WS_VISIBLE,
+		445, 230, 40, 40, hWnd, NULL, hInstance, NULL);
 
 
 
@@ -288,6 +311,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		if ((HWND)lParam == Button4) kolejnosc_pieter.push(2);
 		if ((HWND)lParam == Button5) kolejnosc_pieter.push(1);
 		if ((HWND)lParam == Button6) kolejnosc_pieter.push(0);
+		if ((HWND)lParam == ButtonP_panel) kolejnosc_pieter.push(6);
+		if ((HWND)lParam == Button1_panel) kolejnosc_pieter.push(5);
+		if ((HWND)lParam == Button2_panel) kolejnosc_pieter.push(4);
+		if ((HWND)lParam == Button3_panel) kolejnosc_pieter.push(3);
+		if ((HWND)lParam == Button4_panel) kolejnosc_pieter.push(2);
+		if ((HWND)lParam == Button5_panel) kolejnosc_pieter.push(1);
+		if ((HWND)lParam == Button6_panel) kolejnosc_pieter.push(0);
 		// Parse the menu selections:
 		switch (wmId)
 		{
