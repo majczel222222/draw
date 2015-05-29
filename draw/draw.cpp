@@ -30,6 +30,7 @@ INT_PTR CALLBACK	About(HWND, UINT, WPARAM, LPARAM);
 HWND ButtonP, Button1, Button2, Button3, Button4, Button5, Button6;
 HWND hWnd;
 HWND ButtonP_panel, Button1_panel, Button2_panel, Button3_panel, Button4_panel, Button5_panel, Button6_panel;
+HWND Button0_cz, Button1_cz, Button2_cz, Button3_cz, Button4_cz, Button5_cz, Button6_cz, Button7_cz, Button8_cz;
 
 RECT drawArea1 = { 97, 8, 158, 672 };
 
@@ -61,10 +62,22 @@ void wsiadanie(HDC hdc, LPARAM lParam)
 	SolidBrush napis(Color::RoyalBlue);
 	Font l_osob(&FontFamily(L"Arial"), 25);
 
-	if ((HWND)lParam == ButtonP || (HWND)lParam == Button1 || (HWND)lParam == Button2 || (HWND)lParam == Button3 || (HWND)lParam == Button4
-		|| (HWND)lParam == Button5 || (HWND)lParam == Button6 && (liczba_osob_w_windzie + ile_osob_wsiada) <= 8){
+	ile_osob_wsiada = 0;
+	if ((HWND)lParam == Button0_cz){ ile_osob_wsiada = 0; };
+	if ((HWND)lParam == Button1_cz){ ile_osob_wsiada = 1; };
+	if ((HWND)lParam == Button2_cz){ ile_osob_wsiada = 2; };
+	if ((HWND)lParam == Button3_cz){ ile_osob_wsiada = 3; };
+	if ((HWND)lParam == Button4_cz){ ile_osob_wsiada = 4; };
+	if ((HWND)lParam == Button5_cz){ ile_osob_wsiada = 5; };
+	if ((HWND)lParam == Button6_cz){ ile_osob_wsiada = 6; };
+	if ((HWND)lParam == Button7_cz){ ile_osob_wsiada = 7; };
+	if ((HWND)lParam == Button8_cz){ ile_osob_wsiada = 8; };
 
-		liczba_osob_w_windzie = liczba_osob_w_windzie + ile_osob_wsiada;
+	if ((HWND)lParam == ButtonP || (HWND)lParam == Button1 || (HWND)lParam == Button2 || (HWND)lParam == Button3 || (HWND)lParam == Button4
+		|| (HWND)lParam == Button5 || (HWND)lParam == Button6){
+		if ((liczba_osob_w_windzie + ile_osob_wsiada) <= 8){
+			liczba_osob_w_windzie = liczba_osob_w_windzie + ile_osob_wsiada;
+		}
 	}
 	else graphics.DrawString(L"SCHODAMI KURWA!!!", -1, &l_osob, PointF(290, 400), &napis);
 }
@@ -139,10 +152,12 @@ void MyOnPaint(HDC hdc, LPARAM lParam)
 	graphics.DrawRectangle(&pen_winda, 100, 10 + value, 55, 70);
 	graphics.DrawString(L"Panel", -1, &n_napis, PointF(420, 50), &napis);
 	graphics.DrawString(L"Max. liczba osób w windzie: 8", -1, &l_osob, PointF(290, 600), &napis);
+	graphics.DrawString(L"Ile osób wsiada?", -1, &n_napis, PointF(630, 50), &napis);
 
-	wsiadanie(hdc, lParam);
+	
 	wysiadanie(hdc, lParam);
 	rysuj_czlowieka(hdc);
+	wsiadanie(hdc, lParam);
 	
 
 }
@@ -227,6 +242,32 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	Button6_panel = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "6", WS_CHILD | WS_VISIBLE,
 		445, 230, 40, 40, hWnd, NULL, hInstance, NULL);
 
+	Button0_cz = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "0", WS_CHILD | WS_VISIBLE,
+		730, 120, 40, 40, hWnd, NULL, hInstance, NULL);
+
+	Button1_cz = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "1", WS_CHILD | WS_VISIBLE,
+		770, 120, 40, 40, hWnd, NULL, hInstance, NULL);
+
+	Button2_cz = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "2", WS_CHILD | WS_VISIBLE,
+		730, 160, 40, 40, hWnd, NULL, hInstance, NULL);
+
+	Button3_cz = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "3", WS_CHILD | WS_VISIBLE,
+		770, 160, 40, 40, hWnd, NULL, hInstance, NULL);
+
+	Button4_cz = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "4", WS_CHILD | WS_VISIBLE,
+		730, 200, 40, 40, hWnd, NULL, hInstance, NULL);
+
+	Button5_cz = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "5", WS_CHILD | WS_VISIBLE,
+		770, 200, 40, 40, hWnd, NULL, hInstance, NULL);
+
+	Button6_cz = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "6", WS_CHILD | WS_VISIBLE,
+		730, 240, 40, 40, hWnd, NULL, hInstance, NULL);
+
+	Button7_cz = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "7", WS_CHILD | WS_VISIBLE,
+		770, 240, 40, 40, hWnd, NULL, hInstance, NULL);
+
+	Button8_cz = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "8", WS_CHILD | WS_VISIBLE,
+		730, 280, 40, 40, hWnd, NULL, hInstance, NULL);
 
 
 	hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_DRAW));
