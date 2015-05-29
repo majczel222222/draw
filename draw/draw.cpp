@@ -63,23 +63,24 @@ void wsiadanie(HDC hdc, LPARAM lParam)
 	Font l_osob(&FontFamily(L"Arial"), 25);
 
 	ile_osob_wsiada = 0;
-	if ((HWND)lParam == Button0_cz){ ile_osob_wsiada = 0; };
-	if ((HWND)lParam == Button1_cz){ ile_osob_wsiada = 1; };
-	if ((HWND)lParam == Button2_cz){ ile_osob_wsiada = 2; };
-	if ((HWND)lParam == Button3_cz){ ile_osob_wsiada = 3; };
-	if ((HWND)lParam == Button4_cz){ ile_osob_wsiada = 4; };
-	if ((HWND)lParam == Button5_cz){ ile_osob_wsiada = 5; };
-	if ((HWND)lParam == Button6_cz){ ile_osob_wsiada = 6; };
-	if ((HWND)lParam == Button7_cz){ ile_osob_wsiada = 7; };
-	if ((HWND)lParam == Button8_cz){ ile_osob_wsiada = 8; };
+	if ((HWND)lParam == Button0_cz){ ile_osob_wsiada = 0; }
+	else if ((HWND)lParam == Button1_cz){ ile_osob_wsiada = 1; }
+	else if ((HWND)lParam == Button2_cz){ ile_osob_wsiada = 2; }
+	else if ((HWND)lParam == Button3_cz){ ile_osob_wsiada = 3; }
+	else if ((HWND)lParam == Button4_cz){ ile_osob_wsiada = 4; }
+	else if ((HWND)lParam == Button5_cz){ ile_osob_wsiada = 5; }
+	else if ((HWND)lParam == Button6_cz){ ile_osob_wsiada = 6; }
+	else if ((HWND)lParam == Button7_cz){ ile_osob_wsiada = 7; }
+	else if ((HWND)lParam == Button8_cz){ ile_osob_wsiada = 8; };
 
 	if ((HWND)lParam == ButtonP || (HWND)lParam == Button1 || (HWND)lParam == Button2 || (HWND)lParam == Button3 || (HWND)lParam == Button4
 		|| (HWND)lParam == Button5 || (HWND)lParam == Button6){
 		if ((liczba_osob_w_windzie + ile_osob_wsiada) <= 8){
 			liczba_osob_w_windzie = liczba_osob_w_windzie + ile_osob_wsiada;
 		}
+		else graphics.DrawString(L"SCHODAMI KURWA!!!", -1, &l_osob, PointF(290, 400), &napis);
 	}
-	else graphics.DrawString(L"SCHODAMI KURWA!!!", -1, &l_osob, PointF(290, 400), &napis);
+	
 }
 
 void MyOnPaint(HDC hdc, LPARAM lParam)
@@ -155,9 +156,9 @@ void MyOnPaint(HDC hdc, LPARAM lParam)
 	graphics.DrawString(L"Ile osób wsiada?", -1, &n_napis, PointF(630, 50), &napis);
 
 	
-	wysiadanie(hdc, lParam);
-	rysuj_czlowieka(hdc);
+	wysiadanie(hdc, lParam);	
 	wsiadanie(hdc, lParam);
+	rysuj_czlowieka(hdc);
 	
 
 }
