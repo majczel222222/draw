@@ -30,45 +30,46 @@ HWND ButtonP, Button1, Button2, Button3, Button4, Button5, Button6;
 HWND hWnd;
 HWND ButtonP_panel, Button1_panel, Button2_panel, Button3_panel, Button4_panel, Button5_panel, Button6_panel;
 
-RECT drawArea1 = { 0, 0, 150, 200 };
-RECT drawArea2 = { 50, 400, 650, 422 };
+RECT drawArea1 = { 97, 8, 158, 672 };
+
 
 
 void MyOnPaint(HDC hdc)
-{   
+{
 
 	if (!kolejnosc_pieter.empty())
 	{
 		if (value < ((kolejnosc_pieter.front() * 96) + 14))  value++;
-		if (value > ((kolejnosc_pieter.front() * 96) + 14))  value--;
+		if (value >((kolejnosc_pieter.front() * 96) + 14))  value--;
 		if (value == ((kolejnosc_pieter.front() * 96) + 14))
 		{
-			x=0;
+			x = 0;
 			if (value < ((kolejnosc_pieter.front() * 96) + 14) && x == 0) value--;
-			if (value > ((kolejnosc_pieter.front() * 96) + 14) && x == 0) value++;
-			if (x==0)
+			if (value >((kolejnosc_pieter.front() * 96) + 14) && x == 0) value++;
+			if (x == 0)
 			{
 				kolejnosc_pieter.pop();
 			}
 		}
 	}
-     
-	
+
+
 	Graphics graphics(hdc);
 	SolidBrush p_pietro(Color::Brown);
 	SolidBrush napis(Color::RoyalBlue);
 	Font numery(&FontFamily(L"Arial"), 40);
 	Font n_napis(&FontFamily(L"Arial"), 35);
 	Font l_osob(&FontFamily(L"Arial"), 25);
-	Pen pen_winda(Color(255, 255, 0, 0), 3); 
+	Pen pen_winda(Color(255, 255, 0, 0), 3);
 	Pen pen_sciana(Color(255, 0, 0, 0), 3);
 	Pen pen_lina(Color(255, 0, 0, 255), 2);
 	Pen pen_pietro(Color(255, 0, 0, 255), 8);
+	Pen pen_czlowiek(Color(255, 255, 0, 0), 5);
 
-	graphics.DrawLine(&pen_sciana, 97, 0, 97, 674); 
+	graphics.DrawLine(&pen_sciana, 97, 0, 97, 674);
 	graphics.DrawLine(&pen_sciana, 158, 0, 158, 674);
-    graphics.DrawLine(&pen_lina, 127, 8, 127, 10+value); 
-	
+	graphics.DrawLine(&pen_lina, 127, 8, 127, 10 + value);
+
 
 	graphics.DrawLine(&pen_pietro, 45, 4, 210, 4);
 
@@ -100,13 +101,19 @@ void MyOnPaint(HDC hdc)
 	graphics.DrawLine(&pen_pietro, 45, 676, 210, 676);
 
 
-	graphics.DrawRectangle(&pen_winda, 100, 10+value, 55, 70);
+	graphics.DrawRectangle(&pen_winda, 100, 10 + value, 55, 70);
 	graphics.DrawString(L"Panel", -1, &n_napis, PointF(420, 50), &napis);
 	graphics.DrawString(L"Max. liczba osób w windzie: 8", -1, &l_osob, PointF(290, 600), &napis);
-    
-	
-}
 
+
+	for (int i = 1; i <= 8; i++){
+		if (liczba_osob_w_windzie == i && i % 2 == 0){
+			graphics.DrawRectangle(&pen_czlowiek, 130, 60 + value - i * 10, 5, 10);
+		}
+		else graphics.DrawRectangle(&pen_czlowiek, 110, 60 + value - i * 10, 5, 10);
+
+	}
+}
 
 int OnCreate(HWND window)
 {
