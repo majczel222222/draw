@@ -19,6 +19,7 @@ INT value = 590;
 queue  <int> kolejnosc_pieter;
 int kolejnosc;
 INT x = 0;
+int liczba_osob_w_windzie = 0;
 
 // Forward declarations of functions included in this code module:
 ATOM				MyRegisterClass(HINSTANCE hInstance);
@@ -58,6 +59,7 @@ void MyOnPaint(HDC hdc)
 	SolidBrush napis(Color::RoyalBlue);
 	Font numery(&FontFamily(L"Arial"), 40);
 	Font n_napis(&FontFamily(L"Arial"), 35);
+	Font l_osob(&FontFamily(L"Arial"), 25);
 	Pen pen_winda(Color(255, 255, 0, 0), 3); 
 	Pen pen_sciana(Color(255, 0, 0, 0), 3);
 	Pen pen_lina(Color(255, 0, 0, 255), 2);
@@ -100,6 +102,7 @@ void MyOnPaint(HDC hdc)
 
 	graphics.DrawRectangle(&pen_winda, 100, 10+value, 55, 70);
 	graphics.DrawString(L"Panel", -1, &n_napis, PointF(420, 50), &napis);
+	graphics.DrawString(L"Max. liczba osób w windzie: 8", -1, &l_osob, PointF(290, 600), &napis);
     
 	
 }
