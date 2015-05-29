@@ -32,6 +32,18 @@ HWND ButtonP_panel, Button1_panel, Button2_panel, Button3_panel, Button4_panel, 
 
 RECT drawArea1 = { 97, 8, 158, 672 };
 
+void rysuj_czlowieka(HDC hdc)
+{
+	Graphics graphics(hdc);
+	Pen pen_czlowiek(Color(255, 255, 0, 0), 5);
+	for (int i = 0; i <= liczba_osob_w_windzie; i++){
+		if (i % 2 == 0 && i!=0){
+			graphics.DrawRectangle(&pen_czlowiek, 135, 75 + value - (i-1) * 8, 4, 8);
+		}
+		else if(i%2!=0 && i!=0) graphics.DrawRectangle(&pen_czlowiek, 115, 75 + value - i * 8, 4, 8);
+		else;
+	}
+}
 
 void MyOnPaint(HDC hdc)
 {
@@ -63,7 +75,7 @@ void MyOnPaint(HDC hdc)
 	Pen pen_sciana(Color(255, 0, 0, 0), 3);
 	Pen pen_lina(Color(255, 0, 0, 255), 2);
 	Pen pen_pietro(Color(255, 0, 0, 255), 8);
-	Pen pen_czlowiek(Color(255, 255, 0, 0), 5);
+	
 
 	graphics.DrawLine(&pen_sciana, 97, 0, 97, 674);
 	graphics.DrawLine(&pen_sciana, 158, 0, 158, 674);
@@ -105,13 +117,8 @@ void MyOnPaint(HDC hdc)
 	graphics.DrawString(L"Max. liczba osób w windzie: 8", -1, &l_osob, PointF(290, 600), &napis);
 
 
-	for (int i = 1; i <= 8; i++){
-		if (liczba_osob_w_windzie == i && i % 2 == 0){
-			graphics.DrawRectangle(&pen_czlowiek, 130, 60 + value - i * 10, 5, 10);
-		}
-		else graphics.DrawRectangle(&pen_czlowiek, 110, 60 + value - i * 10, 5, 10);
+	rysuj_czlowieka(hdc);
 
-	}
 }
 
 int OnCreate(HWND window)
