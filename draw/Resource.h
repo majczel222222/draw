@@ -46,6 +46,16 @@
 #define ID_BUTTON7_cz			171
 #define ID_BUTTON8_cz			172
 
+#define ID_BUTTON0_wys			173
+#define ID_BUTTON1_wys			174
+#define ID_BUTTON2_wys			175
+#define ID_BUTTON3_wys			176
+#define ID_BUTTON4_wys			177
+#define ID_BUTTON5_wys			178
+#define ID_BUTTON6_wys			179
+#define ID_BUTTON7_wys			180
+#define ID_BUTTON8_wys			181
+
 
 
 #endif
