@@ -24,7 +24,7 @@ HWND hWnd;
 INT value = 590;
 queue  <int> kolejnosc_pieter;
 INT x = 0;
-int liczba_osob_w_windzie = 4;
+int liczba_osob_w_windzie = 0;
 
 
 // Forward declarations of functions included in this code module:
@@ -37,21 +37,6 @@ RECT drawArea1 = { 97, 8, 158, 672 };
 
 
 
-
-
-/*void poczatek(HDC hdc, LPARAM lParam){
-	Graphics graphics(hdc);
-	Pen pen_czlowiek(Color(255, 255, 0, 0), 5);
-	srand(time(NULL));
-	
-	if ((HWND)lParam == ButtonP || (HWND)lParam == Button1 || (HWND)lParam == Button2 || (HWND)lParam == Button3 || (HWND)lParam == Button4
-		|| (HWND)lParam == Button5 || (HWND)lParam == Button6){
-		liczba_osob_w_windzie = (rand() % 8) + 1;
-		graphics.DrawRectangle(&pen_czlowiek, 135, 75, 4, 8);
-	}
-	
-
-}*/
 
 void rysuj_czlowieka(HDC &hdc)
 {
@@ -66,28 +51,20 @@ void rysuj_czlowieka(HDC &hdc)
 	}
 }
 
-
-/*void wsiadanie(HDC &hdc)
+bool winda_dziala(int value)
 {
-	Graphics graphics(hdc);
-	SolidBrush napis(Color::RoyalBlue);
-	Font l_osob(&FontFamily(L"Arial"), 25);
-	Pen pen_winda(Color(255, 255, 0, 0), 3);
-	graphics.DrawRectangle(&pen_winda, 200, 400, 55, 70);
-	if ((liczba_osob_w_windzie + ile_osob_wsiada) <= 8){
-		liczba_osob_w_windzie = liczba_osob_w_windzie + ile_osob_wsiada;
+	bool winda_dziala = true;
+
+	for (int i = 0; i < 7; i++)
+	{
+		if (value == (i * 96)+14)
+			winda_dziala = false;
 	}
-	else graphics.DrawString(L"SCHODAMI KURWA!!!", -1, &l_osob, PointF(290, 400), &napis);
 
-
+	if (winda_dziala == false)
+		return false;
+	else return true;
 }
-
-
-void wysiadanie(HDC &hdc)
-{
-        liczba_osob_w_windzie = liczba_osob_w_windzie - ile_osob_wysiada; 
-		
-}*/
 
 
 
@@ -166,16 +143,6 @@ void MyOnPaint(HDC hdc)
 
 
 	rysuj_czlowieka(hdc);
-/*	poczatek(hdc, lParam);
-	rysuj_czlowieka(hdc);
-	while (liczba_osob_w_windzie != 0){
-		wysiadanie(hdc, lParam);
-		rysuj_czlowieka(hdc);
-		wsiadanie(hdc);
-		rysuj_czlowieka(hdc);
-	}
-	
-*/
 }
 
 
@@ -393,8 +360,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	int wmId, wmEvent;
 	PAINTSTRUCT ps;
 	HDC hdc;
-	int ile_osob_wsiada = 0;
-	int ile_osob_wysiada=0;
 	//OnCreate(hWnd,wParam,lParam);
 	//OnTimer(hWnd,wParam,lParam);
 
@@ -414,174 +379,132 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case ID_BUTTONP:
 			kolejnosc_pieter.push(6);
-			if ((liczba_osob_w_windzie + ile_osob_wsiada) <= 8){
-				liczba_osob_w_windzie = liczba_osob_w_windzie + ile_osob_wsiada;
-			}
-				rysuj_czlowieka(hdc);
-				SetFocus(hWnd);
-				break;
+			rysuj_czlowieka(hdc);
+			break;
 		case ID_BUTTON1:
 			kolejnosc_pieter.push(5);
-			if ((liczba_osob_w_windzie + ile_osob_wsiada) <= 8){
-				liczba_osob_w_windzie = liczba_osob_w_windzie + ile_osob_wsiada;
-			}
-				rysuj_czlowieka(hdc);
-				SetFocus(hWnd);
-				break;
+			rysuj_czlowieka(hdc);
+			break;
 		case ID_BUTTON2:
 			kolejnosc_pieter.push(4);
-			if ((liczba_osob_w_windzie + ile_osob_wsiada) <= 8){
-				liczba_osob_w_windzie = liczba_osob_w_windzie + ile_osob_wsiada;
-			}
 			rysuj_czlowieka(hdc);
-			SetFocus(hWnd);
-				break;
+			break;
 		case ID_BUTTON3:
 			kolejnosc_pieter.push(3);
-			if ((liczba_osob_w_windzie + ile_osob_wsiada) <= 8){
-				liczba_osob_w_windzie = liczba_osob_w_windzie + ile_osob_wsiada;
-			}
 			rysuj_czlowieka(hdc);
-			SetFocus(hWnd);
-				break;
+			break;
 		case ID_BUTTON4:
 			kolejnosc_pieter.push(2);
-			if ((liczba_osob_w_windzie + ile_osob_wsiada) <= 8){
-				liczba_osob_w_windzie = liczba_osob_w_windzie + ile_osob_wsiada;
-			}
 			rysuj_czlowieka(hdc);
-			SetFocus(hWnd);
 			break;
 		case ID_BUTTON5:
 			kolejnosc_pieter.push(1);
-			if ((liczba_osob_w_windzie + ile_osob_wsiada) <= 8){
-				liczba_osob_w_windzie = liczba_osob_w_windzie + ile_osob_wsiada;
-			}
 			rysuj_czlowieka(hdc);
-			SetFocus(hWnd);
 			break;
 		case ID_BUTTON6:
 			kolejnosc_pieter.push(0);
-			if ((liczba_osob_w_windzie + ile_osob_wsiada) <= 8){
-				liczba_osob_w_windzie = liczba_osob_w_windzie + ile_osob_wsiada;
-			}
-			
 			rysuj_czlowieka(hdc);
-			SetFocus(hWnd);
 			break;
 		case ID_BUTTONP_panel:
 			kolejnosc_pieter.push(6);
-			liczba_osob_w_windzie = liczba_osob_w_windzie - ile_osob_wysiada;
 			rysuj_czlowieka(hdc);
-			SetFocus(hWnd);
 			break;
 		case ID_BUTTON1_panel:
 			kolejnosc_pieter.push(5);
-			liczba_osob_w_windzie = liczba_osob_w_windzie - ile_osob_wysiada;
 			rysuj_czlowieka(hdc);
-			SetFocus(hWnd);
 			break;
 		case ID_BUTTON2_panel:
 			kolejnosc_pieter.push(4);
-			liczba_osob_w_windzie = liczba_osob_w_windzie - ile_osob_wysiada;
 			rysuj_czlowieka(hdc);
-			SetFocus(hWnd);
 			break;
 		case ID_BUTTON3_panel:
 			kolejnosc_pieter.push(3);
-			liczba_osob_w_windzie = liczba_osob_w_windzie - ile_osob_wysiada;
 			rysuj_czlowieka(hdc);
-			SetFocus(hWnd);
 			break;
 		case ID_BUTTON4_panel:
 			kolejnosc_pieter.push(2);
-			liczba_osob_w_windzie = liczba_osob_w_windzie - ile_osob_wysiada;
 			rysuj_czlowieka(hdc);
-			SetFocus(hWnd);
 			break;
 		case ID_BUTTON5_panel:
 			kolejnosc_pieter.push(1);
-			liczba_osob_w_windzie = liczba_osob_w_windzie - ile_osob_wysiada;
 			rysuj_czlowieka(hdc);
-			SetFocus(hWnd);
 			break;
 		case ID_BUTTON6_panel:
 			kolejnosc_pieter.push(0);
-			liczba_osob_w_windzie = liczba_osob_w_windzie - ile_osob_wysiada;
 			rysuj_czlowieka(hdc);
-			SetFocus(hWnd);
 			break;
 		case ID_BUTTON0_cz:
-			ile_osob_wsiada = 0;
-			SetFocus(hWnd);
+			if (liczba_osob_w_windzie <=8 && winda_dziala(value)==false)
+			liczba_osob_w_windzie = liczba_osob_w_windzie;
 			break;
 		case ID_BUTTON1_cz:
-			ile_osob_wsiada = 1;
-			SetFocus(hWnd);
+
+			if (liczba_osob_w_windzie + 1 <= 8 && winda_dziala(value) == false)
+			liczba_osob_w_windzie = liczba_osob_w_windzie + 1;
 			break;
 		case ID_BUTTON2_cz:
-			ile_osob_wsiada = 2;
-			SetFocus(hWnd);
+			if (liczba_osob_w_windzie + 2 <= 8 && winda_dziala(value) == false)
+			liczba_osob_w_windzie = liczba_osob_w_windzie + 2;
 			break;
 		case ID_BUTTON3_cz:
-			ile_osob_wsiada = 3;
-			SetFocus(hWnd);
+			if (liczba_osob_w_windzie + 3 <= 8 && winda_dziala(value) == false)
+			liczba_osob_w_windzie = liczba_osob_w_windzie + 3;
 			break;
 		case ID_BUTTON4_cz:
-			ile_osob_wsiada = 4;
-			SetFocus(hWnd);
+			if (liczba_osob_w_windzie + 4 <= 8 && winda_dziala(value) == false)
+			liczba_osob_w_windzie = liczba_osob_w_windzie + 4;
 			break;
 		case ID_BUTTON5_cz:
-			ile_osob_wsiada = 5;
-			SetFocus(hWnd);
+			if (liczba_osob_w_windzie + 5 <= 8 && winda_dziala(value) == false)
+			liczba_osob_w_windzie = liczba_osob_w_windzie + 5;
 			break;
 		case ID_BUTTON6_cz:
-			ile_osob_wsiada = 6;
-			SetFocus(hWnd);
+			if (liczba_osob_w_windzie + 6 <= 8 && winda_dziala(value) == false)
+			liczba_osob_w_windzie = liczba_osob_w_windzie + 6;
 			break;
 		case ID_BUTTON7_cz:
-			ile_osob_wsiada = 7;
-			SetFocus(hWnd);
+			if (liczba_osob_w_windzie + 7 <= 8 && winda_dziala(value) == false)
+			liczba_osob_w_windzie = liczba_osob_w_windzie + 7;
 			break;
 		case ID_BUTTON8_cz:
-			ile_osob_wsiada = 8;
-			SetFocus(hWnd);
+			if (liczba_osob_w_windzie + 8 <= 8 && winda_dziala(value) == false)
+			liczba_osob_w_windzie = liczba_osob_w_windzie + 8;
             break;
 		case ID_BUTTON0_wys:
-			ile_osob_wysiada = 0;
-			SetFocus(hWnd);
+			if (liczba_osob_w_windzie >= 0 && winda_dziala(value) == false)
+			liczba_osob_w_windzie = liczba_osob_w_windzie;
 			break;
 		case ID_BUTTON1_wys:
-			ile_osob_wysiada = 1;
-			SetFocus(hWnd);
+			if (liczba_osob_w_windzie - 1 >= 0 && winda_dziala(value) == false)
+			liczba_osob_w_windzie = liczba_osob_w_windzie - 1;
 			break;
 		case ID_BUTTON2_wys:
-			ile_osob_wysiada = 2;
-			SetFocus(hWnd);
+			if (liczba_osob_w_windzie - 2 >= 0 && winda_dziala(value) == false)
+			liczba_osob_w_windzie = liczba_osob_w_windzie - 2;
 			break;
 		case ID_BUTTON3_wys:
-			ile_osob_wysiada = 3;
-			SetFocus(hWnd);
+			if (liczba_osob_w_windzie - 3 >= 0 && winda_dziala(value) == false)
+			liczba_osob_w_windzie = liczba_osob_w_windzie - 3;
 			break;
 		case ID_BUTTON4_wys:
-			ile_osob_wysiada = 4;
-			SetFocus(hWnd);
+			if (liczba_osob_w_windzie - 4 >= 0 && winda_dziala(value) == false)
+			liczba_osob_w_windzie = liczba_osob_w_windzie - 4;
 			break;
 		case ID_BUTTON5_wys:
-			ile_osob_wysiada = 5;
-			SetFocus(hWnd);
+			if (liczba_osob_w_windzie - 5 >= 0 && winda_dziala(value) == false)
+			liczba_osob_w_windzie = liczba_osob_w_windzie - 5;
 			break;
 		case ID_BUTTON6_wys:
-			ile_osob_wysiada = 6;
-			SetFocus(hWnd);
+			if (liczba_osob_w_windzie - 6 >= 0 && winda_dziala(value) == false)
+			liczba_osob_w_windzie = liczba_osob_w_windzie - 6;
 			break;
 		case ID_BUTTON7_wys:
-			ile_osob_wysiada = 7;
-			SetFocus(hWnd);
+			if (liczba_osob_w_windzie - 7 >= 0 && winda_dziala(value) == false)
+			liczba_osob_w_windzie = liczba_osob_w_windzie - 7;
 			break;
 		case ID_BUTTON8_wys:
-			ile_osob_wysiada = 8;
-			SetFocus(hWnd);
+			if (liczba_osob_w_windzie - 8 >= 0 && winda_dziala(value) == false)
+			liczba_osob_w_windzie = liczba_osob_w_windzie - 8;
 			break;
 		default:
 			return DefWindowProc(hWnd, message, wParam, lParam);
