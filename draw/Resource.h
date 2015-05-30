@@ -16,6 +16,38 @@
 #define IDC_MYICON				2
 #ifndef IDC_STATIC
 #define IDC_STATIC				-1
+
+
+#define ID_BUTTONP				150
+#define ID_BUTTON1				151
+#define ID_BUTTON2				152
+#define ID_BUTTON3				153
+#define ID_BUTTON4				154
+#define ID_BUTTON5			    155
+#define ID_BUTTON6				156
+
+
+#define ID_BUTTONP_panel		157
+#define ID_BUTTON1_panel		158
+#define ID_BUTTON2_panel		159
+#define ID_BUTTON3_panel		160
+#define ID_BUTTON4_panel		161
+#define ID_BUTTON5_panel		162
+#define ID_BUTTON6_panel		163
+
+
+#define ID_BUTTON0_cz			164
+#define ID_BUTTON1_cz			165
+#define ID_BUTTON2_cz			166
+#define ID_BUTTON3_cz			167
+#define ID_BUTTON4_cz			168
+#define ID_BUTTON5_cz			169
+#define ID_BUTTON6_cz			170
+#define ID_BUTTON7_cz			171
+#define ID_BUTTON8_cz			172
+
+
+
 #endif
 // Next default values for new objects
 //

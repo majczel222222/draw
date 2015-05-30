@@ -5,7 +5,10 @@
 #include "draw.h"
 #include <queue>;
 #include <Windows.h>;
+#include <time.h>;
+#include <ctime>;
 using namespace std;
+
 
 #define MAX_LOADSTRING 100
 #define TMR_1 1
@@ -19,7 +22,7 @@ INT value = 590;
 queue  <int> kolejnosc_pieter;
 int kolejnosc;
 INT x = 0;
-int liczba_osob_w_windzie = 1;
+int liczba_osob_w_windzie = 0;
 int ile_osob_wsiada = 0;
 
 // Forward declarations of functions included in this code module:
@@ -27,12 +30,10 @@ ATOM				MyRegisterClass(HINSTANCE hInstance);
 BOOL				InitInstance(HINSTANCE, int);
 LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK	About(HWND, UINT, WPARAM, LPARAM);
-HWND ButtonP, Button1, Button2, Button3, Button4, Button5, Button6;
 HWND hWnd;
-HWND ButtonP_panel, Button1_panel, Button2_panel, Button3_panel, Button4_panel, Button5_panel, Button6_panel;
-HWND Button0_cz, Button1_cz, Button2_cz, Button3_cz, Button4_cz, Button5_cz, Button6_cz, Button7_cz, Button8_cz;
-
 RECT drawArea1 = { 97, 8, 158, 672 };
+HWND hwndButton;
+HDC hdc;
 
 void rysuj_czlowieka(HDC hdc)
 {
@@ -47,11 +48,11 @@ void rysuj_czlowieka(HDC hdc)
 	}
 }
 
-void poczatek(HDC hdc, LPARAM lParam){
+/*void poczatek(HDC hdc, LPARAM lParam){
 	Graphics graphics(hdc);
 	Pen pen_czlowiek(Color(255, 255, 0, 0), 5);
+	srand(time(NULL));
 	
-
 	if ((HWND)lParam == ButtonP || (HWND)lParam == Button1 || (HWND)lParam == Button2 || (HWND)lParam == Button3 || (HWND)lParam == Button4
 		|| (HWND)lParam == Button5 || (HWND)lParam == Button6){
 		liczba_osob_w_windzie = (rand() % 8) + 1;
@@ -59,45 +60,32 @@ void poczatek(HDC hdc, LPARAM lParam){
 	}
 	
 
-}
+}*/
 
-void wysiadanie(HDC hdc, LPARAM lParam)
+void wysiadanie(HDC hdc)
 {
-	if ((HWND)lParam == ButtonP_panel || (HWND)lParam == Button1_panel || (HWND)lParam == Button2_panel || (HWND)lParam == Button3_panel || (HWND)lParam == Button4_panel
-		|| (HWND)lParam == Button5_panel || (HWND)lParam == Button6_panel){
-		if (rand() % liczba_osob_w_windzie == 0){ liczba_osob_w_windzie = liczba_osob_w_windzie - 1; }
-		else{ liczba_osob_w_windzie = liczba_osob_w_windzie - rand() % liczba_osob_w_windzie; };
-	}
+	srand(time(NULL));
+	if (rand() % liczba_osob_w_windzie == 0){ liczba_osob_w_windzie = liczba_osob_w_windzie - 1; }
+	else{ liczba_osob_w_windzie = liczba_osob_w_windzie - rand() % liczba_osob_w_windzie; };
+	
 	
 }
 
-void wsiadanie(HDC hdc, LPARAM lParam)
+void wsiadanie(HDC hdc)
 {
 	Graphics graphics(hdc);
 	SolidBrush napis(Color::RoyalBlue);
 	Font l_osob(&FontFamily(L"Arial"), 25);
 
-	if ((HWND)lParam == Button0_cz) ile_osob_wsiada = 0; 
-	else if ((HWND)lParam == Button1_cz) ile_osob_wsiada = 1; 
-	else if ((HWND)lParam == Button2_cz) ile_osob_wsiada = 2; 
-	else if ((HWND)lParam == Button3_cz) ile_osob_wsiada = 3; 
-	else if ((HWND)lParam == Button4_cz) ile_osob_wsiada = 4; 
-	else if ((HWND)lParam == Button5_cz) ile_osob_wsiada = 5; 
-	else if ((HWND)lParam == Button6_cz) ile_osob_wsiada = 6; 
-	else if ((HWND)lParam == Button7_cz) ile_osob_wsiada = 7; 
-	else  ile_osob_wsiada = 8;
-
-	if ((HWND)lParam == ButtonP || (HWND)lParam == Button1 || (HWND)lParam == Button2 || (HWND)lParam == Button3 || (HWND)lParam == Button4
-		|| (HWND)lParam == Button5 || (HWND)lParam == Button6){
 		if ((liczba_osob_w_windzie + ile_osob_wsiada) <= 8){
 			liczba_osob_w_windzie = liczba_osob_w_windzie + ile_osob_wsiada;
 		}
 		else graphics.DrawString(L"SCHODAMI KURWA!!!", -1, &l_osob, PointF(290, 400), &napis);
-	}
+	
 	
 }
 
-void MyOnPaint(HDC hdc, LPARAM lParam)
+void MyOnPaint(HDC hdc)
 {
 
 	if (!kolejnosc_pieter.empty())
@@ -169,16 +157,16 @@ void MyOnPaint(HDC hdc, LPARAM lParam)
 	graphics.DrawString(L"Max. liczba osob w windzie: 8", -1, &l_osob, PointF(290, 600), &napis);
 	graphics.DrawString(L"Ile osób wsiada?", -1, &n_napis, PointF(630, 50), &napis);
 
-	poczatek(hdc, lParam);
+/*	poczatek(hdc, lParam);
 	rysuj_czlowieka(hdc);
 	while (liczba_osob_w_windzie != 0){
 		wysiadanie(hdc, lParam);
 		rysuj_czlowieka(hdc);
-		wsiadanie(hdc, lParam);
+		wsiadanie(hdc);
 		rysuj_czlowieka(hdc);
 	}
 	
-
+*/
 }
 
 int OnCreate(HWND window)
@@ -219,74 +207,51 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	}
 
 
-	ButtonP = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "P", WS_CHILD | WS_VISIBLE,
-		165, 625, 45, 45, hWnd, NULL, hInstance, NULL);
+	hwndButton = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "P", WS_CHILD | WS_VISIBLE, 165, 625, 45, 45, hWnd, (HMENU)ID_BUTTONP, hInstance, NULL);
 
-	Button1 = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "1", WS_CHILD | WS_VISIBLE,
-		165, 529, 45, 45, hWnd, NULL, hInstance, NULL);
+	hwndButton = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "1", WS_CHILD | WS_VISIBLE, 165, 529, 45, 45, hWnd, (HMENU)ID_BUTTON1, hInstance, NULL);
 
-	Button2 = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "2", WS_CHILD | WS_VISIBLE,
-		165, 433, 45, 45, hWnd, NULL, hInstance, NULL);
+	hwndButton = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "2", WS_CHILD | WS_VISIBLE, 165, 433, 45, 45, hWnd, (HMENU)ID_BUTTON2, hInstance, NULL);
 
-	Button3 = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "3", WS_CHILD | WS_VISIBLE,
-		165, 337, 45, 45, hWnd, NULL, hInstance, NULL);
+	hwndButton = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "3", WS_CHILD | WS_VISIBLE, 165, 337, 45, 45, hWnd, (HMENU)ID_BUTTON3, hInstance, NULL);
 
-	Button4 = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "4", WS_CHILD | WS_VISIBLE,
-		165, 241, 45, 45, hWnd, NULL, hInstance, NULL);
+	hwndButton = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "4", WS_CHILD | WS_VISIBLE, 165, 241, 45, 45, hWnd, (HMENU)ID_BUTTON4, hInstance, NULL);
 
-	Button5 = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "5", WS_CHILD | WS_VISIBLE,
-		165, 145, 45, 45, hWnd, NULL, hInstance, NULL);
+	hwndButton = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "5", WS_CHILD | WS_VISIBLE, 165, 145, 45, 45, hWnd, (HMENU)ID_BUTTON5, hInstance, NULL);
 
-	Button6 = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "6", WS_CHILD | WS_VISIBLE,
-		165, 49, 45, 45, hWnd, NULL, hInstance, NULL);
+	hwndButton = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "6", WS_CHILD | WS_VISIBLE, 165, 49, 45, 45, hWnd, (HMENU)ID_BUTTON6, hInstance, NULL);
 
-	ButtonP_panel = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "P", WS_CHILD | WS_VISIBLE,
-		445, 110, 40, 40, hWnd, NULL, hInstance, NULL);
+	hwndButton = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "P", WS_CHILD | WS_VISIBLE, 445, 110, 40, 40, hWnd, (HMENU)ID_BUTTONP_panel, hInstance, NULL);
 
-	Button1_panel = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "1", WS_CHILD | WS_VISIBLE,
-		485, 110, 40, 40, hWnd, NULL, hInstance, NULL);
+	hwndButton = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "1", WS_CHILD | WS_VISIBLE, 485, 110, 40, 40, hWnd, (HMENU)ID_BUTTON1_panel, hInstance, NULL);
 
-	Button2_panel = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "2", WS_CHILD | WS_VISIBLE,
-		445, 150, 40, 40, hWnd, NULL, hInstance, NULL);
+	hwndButton = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "2", WS_CHILD | WS_VISIBLE, 445, 150, 40, 40, hWnd, (HMENU)ID_BUTTON2_panel, hInstance, NULL);
 
-	Button3_panel = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "3", WS_CHILD | WS_VISIBLE,
-		485, 150, 40, 40, hWnd, NULL, hInstance, NULL);
+	hwndButton = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "3", WS_CHILD | WS_VISIBLE, 485, 150, 40, 40, hWnd, (HMENU)ID_BUTTON3_panel, hInstance, NULL);
 
-	Button4_panel = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "4", WS_CHILD | WS_VISIBLE,
-		445, 190, 40, 40, hWnd, NULL, hInstance, NULL);
+	hwndButton = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "4", WS_CHILD | WS_VISIBLE, 445, 190, 40, 40, hWnd, (HMENU)ID_BUTTON4_panel, hInstance, NULL);
 
-	Button5_panel = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "5", WS_CHILD | WS_VISIBLE,
-		485, 190, 40, 40, hWnd, NULL, hInstance, NULL);
+	hwndButton = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "5", WS_CHILD | WS_VISIBLE, 485, 190, 40, 40, hWnd, (HMENU)ID_BUTTON5_panel , hInstance, NULL);
 
-	Button6_panel = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "6", WS_CHILD | WS_VISIBLE,
-		445, 230, 40, 40, hWnd, NULL, hInstance, NULL);
+	hwndButton = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "6", WS_CHILD | WS_VISIBLE, 445, 230, 40, 40, hWnd, (HMENU)ID_BUTTON6_panel, hInstance, NULL);
 
-	Button0_cz = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "0", WS_CHILD | WS_VISIBLE,
-		730, 120, 40, 40, hWnd, NULL, hInstance, NULL);
+	hwndButton = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "0", WS_CHILD | WS_VISIBLE, 730, 120, 40, 40, hWnd, (HMENU)ID_BUTTON0_cz, hInstance, NULL);
 
-	Button1_cz = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "1", WS_CHILD | WS_VISIBLE,
-		770, 120, 40, 40, hWnd, NULL, hInstance, NULL);
+	hwndButton = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "1", WS_CHILD | WS_VISIBLE, 770, 120, 40, 40, hWnd, (HMENU)ID_BUTTON1_cz, hInstance, NULL);
 
-	Button2_cz = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "2", WS_CHILD | WS_VISIBLE,
-		730, 160, 40, 40, hWnd, NULL, hInstance, NULL);
+	hwndButton = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "2", WS_CHILD | WS_VISIBLE, 730, 160, 40, 40, hWnd, (HMENU)ID_BUTTON2_cz, hInstance, NULL);
 
-	Button3_cz = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "3", WS_CHILD | WS_VISIBLE,
-		770, 160, 40, 40, hWnd, NULL, hInstance, NULL);
+	hwndButton = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "3", WS_CHILD | WS_VISIBLE, 770, 160, 40, 40, hWnd, (HMENU)ID_BUTTON3_cz, hInstance, NULL);
 
-	Button4_cz = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "4", WS_CHILD | WS_VISIBLE,
-		730, 200, 40, 40, hWnd, NULL, hInstance, NULL);
+	hwndButton = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "4", WS_CHILD | WS_VISIBLE, 730, 200, 40, 40, hWnd, (HMENU)ID_BUTTON4_cz, hInstance, NULL);
 
-	Button5_cz = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "5", WS_CHILD | WS_VISIBLE,
-		770, 200, 40, 40, hWnd, NULL, hInstance, NULL);
+	hwndButton = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "5", WS_CHILD | WS_VISIBLE, 770, 200, 40, 40, hWnd, (HMENU)ID_BUTTON5_cz, hInstance, NULL);
 
-	Button6_cz = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "6", WS_CHILD | WS_VISIBLE,
-		730, 240, 40, 40, hWnd, NULL, hInstance, NULL);
+	hwndButton = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "6", WS_CHILD | WS_VISIBLE, 730, 240, 40, 40, hWnd, (HMENU)ID_BUTTON6_cz, hInstance, NULL);
 
-	Button7_cz = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "7", WS_CHILD | WS_VISIBLE,
-		770, 240, 40, 40, hWnd, NULL, hInstance, NULL);
+	hwndButton = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "7", WS_CHILD | WS_VISIBLE, 770, 240, 40, 40, hWnd, (HMENU)ID_BUTTON7_cz, hInstance, NULL);
 
-	Button8_cz = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "8", WS_CHILD | WS_VISIBLE,
-		730, 280, 40, 40, hWnd, NULL, hInstance, NULL);
+	hwndButton = CreateWindowEx(WS_EX_WINDOWEDGE, "BUTTON", "8", WS_CHILD | WS_VISIBLE, 730, 280, 40, 40, hWnd, (HMENU)ID_BUTTON8_cz, hInstance, NULL);
 
 
 	hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_DRAW));
@@ -313,7 +278,7 @@ void repaintWindow(HWND hWnd, HDC &hdc, PAINTSTRUCT &ps, RECT *drawArea, LPARAM 
 	else
 		InvalidateRect(hWnd, drawArea, TRUE); //repaint drawArea
 	hdc = BeginPaint(hWnd, &ps);
-	MyOnPaint(hdc, lParam);
+	MyOnPaint(hdc);
 	EndPaint(hWnd, &ps);
 }
 
@@ -406,20 +371,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_COMMAND:
 		wmId    = LOWORD(wParam);
 		wmEvent = HIWORD(wParam);
-		if ((HWND)lParam == ButtonP) kolejnosc_pieter.push(6);
-		if ((HWND)lParam == Button1) kolejnosc_pieter.push(5);
-		if ((HWND)lParam == Button2) kolejnosc_pieter.push(4);
-		if ((HWND)lParam == Button3) kolejnosc_pieter.push(3);
-		if ((HWND)lParam == Button4) kolejnosc_pieter.push(2);
-		if ((HWND)lParam == Button5) kolejnosc_pieter.push(1);
-		if ((HWND)lParam == Button6) kolejnosc_pieter.push(0);
-		if ((HWND)lParam == ButtonP_panel) kolejnosc_pieter.push(6);
-		if ((HWND)lParam == Button1_panel) kolejnosc_pieter.push(5);
-		if ((HWND)lParam == Button2_panel) kolejnosc_pieter.push(4);
-		if ((HWND)lParam == Button3_panel) kolejnosc_pieter.push(3);
-		if ((HWND)lParam == Button4_panel) kolejnosc_pieter.push(2);
-		if ((HWND)lParam == Button5_panel) kolejnosc_pieter.push(1);
-		if ((HWND)lParam == Button6_panel) kolejnosc_pieter.push(0);
 		// Parse the menu selections:
 		switch (wmId)
 		{
@@ -429,6 +380,103 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case IDM_EXIT:
 			DestroyWindow(hWnd);
 			break;
+		case ID_BUTTONP:
+			kolejnosc_pieter.push(6);
+			wsiadanie(hdc);
+			rysuj_czlowieka(hdc);
+			break;
+		case ID_BUTTON1:
+			kolejnosc_pieter.push(5);
+			wsiadanie(hdc);
+			rysuj_czlowieka(hdc);
+			break;
+		case ID_BUTTON2:
+			kolejnosc_pieter.push(4);
+			wsiadanie(hdc);
+			rysuj_czlowieka(hdc);
+			break;
+		case ID_BUTTON3:
+			kolejnosc_pieter.push(3);
+			wsiadanie(hdc);
+			rysuj_czlowieka(hdc);
+			break;
+		case ID_BUTTON4:
+			kolejnosc_pieter.push(2);
+			wsiadanie(hdc);
+			rysuj_czlowieka(hdc);
+			break;
+		case ID_BUTTON5:
+			kolejnosc_pieter.push(1);
+			wsiadanie(hdc);
+			rysuj_czlowieka(hdc);
+			break;
+		case ID_BUTTON6:
+			kolejnosc_pieter.push(0);
+			wsiadanie(hdc);
+			rysuj_czlowieka(hdc);
+			break;
+		case ID_BUTTONP_panel:
+			kolejnosc_pieter.push(6);
+			wysiadanie(hdc);
+			rysuj_czlowieka(hdc);
+			break;
+		case ID_BUTTON1_panel:
+			kolejnosc_pieter.push(5);
+			wysiadanie(hdc);
+			rysuj_czlowieka(hdc);
+			break;
+		case ID_BUTTON2_panel:
+			kolejnosc_pieter.push(4);
+			wysiadanie(hdc);
+			rysuj_czlowieka(hdc);
+			break;
+		case ID_BUTTON3_panel:
+			kolejnosc_pieter.push(3);
+			wysiadanie(hdc);
+			rysuj_czlowieka(hdc);
+			break;
+		case ID_BUTTON4_panel:
+			kolejnosc_pieter.push(2);
+			wysiadanie(hdc);
+			rysuj_czlowieka(hdc);
+			break;
+		case ID_BUTTON5_panel:
+			kolejnosc_pieter.push(1);
+			wysiadanie(hdc);
+			rysuj_czlowieka(hdc);
+			break;
+		case ID_BUTTON6_panel:
+			kolejnosc_pieter.push(0);
+			wysiadanie(hdc);
+			rysuj_czlowieka(hdc);
+			break;
+		case ID_BUTTON0_cz:
+			ile_osob_wsiada = 0;
+			break;
+		case ID_BUTTON1_cz:
+			ile_osob_wsiada = 1;
+			break;
+		case ID_BUTTON2_cz:
+			ile_osob_wsiada = 2;
+			break;
+		case ID_BUTTON3_cz:
+			ile_osob_wsiada = 3;
+			break;
+		case ID_BUTTON4_cz:
+			ile_osob_wsiada = 4;
+			break;
+		case ID_BUTTON5_cz:
+			ile_osob_wsiada = 5;
+			break;
+		case ID_BUTTON6_cz:
+			ile_osob_wsiada = 6;
+			break;
+		case ID_BUTTON7_cz:
+			ile_osob_wsiada = 7;
+			break;
+		case ID_BUTTON8_cz:
+			ile_osob_wsiada = 8;
+			break;
 		default:
 			return DefWindowProc(hWnd, message, wParam, lParam);
 		}
@@ -436,7 +484,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
 		// TODO: Add any drawing code here...
-		MyOnPaint(hdc, lParam);
+		MyOnPaint(hdc);
 		EndPaint(hWnd, &ps);
 		break;
 	case WM_DESTROY:
