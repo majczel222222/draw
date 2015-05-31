@@ -104,7 +104,7 @@ void MyOnPaint(HDC hdc)
 		licz_sekundy = 0;
 	}
 
-	if (licz_sekundy == 125){ kolejnosc_pieter.push(6); }
+	if (licz_sekundy == 157){ kolejnosc_pieter.push(6); }
 
 	graphics.DrawLine(&pen_sciana, 97, 0, 97, 674);
 	graphics.DrawLine(&pen_sciana, 158, 0, 158, 674);
