@@ -4,10 +4,6 @@
 #include "stdafx.h"
 #include "draw.h"
 #include <queue>;
-#include <Windows.h>;
-#include <time.h>;
-#include <ctime>;
-#include <cstdlib>;
 using namespace std;
 
 
@@ -25,7 +21,7 @@ INT value = 590;
 queue  <int> kolejnosc_pieter;
 INT x = 0;
 int liczba_osob_w_windzie = 0;
-
+int licz_sekundy = 0;
 
 // Forward declarations of functions included in this code module:
 ATOM				MyRegisterClass(HINSTANCE hInstance);
@@ -51,19 +47,19 @@ void rysuj_czlowieka(HDC &hdc)
 	}
 }
 
-bool winda_dziala(int value)
+bool prawidlowa_wysokosc(int value)
 {
-	bool winda_dziala = true;
+	bool prawidlowa_wysokosc = false;
 
 	for (int i = 0; i < 7; i++)
 	{
 		if (value == (i * 96)+14)
-			winda_dziala = false;
+			prawidlowa_wysokosc = true;
 	}
 
-	if (winda_dziala == false)
-		return false;
-	else return true;
+	if (prawidlowa_wysokosc == true)
+		return true;
+	else return false;
 }
 
 
@@ -99,6 +95,16 @@ void MyOnPaint(HDC hdc)
 	Pen pen_lina(Color(255, 0, 0, 255), 2);
 	Pen pen_pietro(Color(255, 0, 0, 255), 8);
 	
+	if (prawidlowa_wysokosc(value) == true  && liczba_osob_w_windzie == 0)
+	{
+		licz_sekundy++;
+	}
+	else
+	{
+		licz_sekundy = 0;
+	}
+
+	if (licz_sekundy == 125){ kolejnosc_pieter.push(6); }
 
 	graphics.DrawLine(&pen_sciana, 97, 0, 97, 674);
 	graphics.DrawLine(&pen_sciana, 158, 0, 158, 674);
@@ -379,131 +385,117 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case ID_BUTTONP:
 			kolejnosc_pieter.push(6);
-			rysuj_czlowieka(hdc);
 			break;
 		case ID_BUTTON1:
 			kolejnosc_pieter.push(5);
-			rysuj_czlowieka(hdc);
 			break;
 		case ID_BUTTON2:
 			kolejnosc_pieter.push(4);
-			rysuj_czlowieka(hdc);
 			break;
 		case ID_BUTTON3:
 			kolejnosc_pieter.push(3);
-			rysuj_czlowieka(hdc);
 			break;
 		case ID_BUTTON4:
 			kolejnosc_pieter.push(2);
-			rysuj_czlowieka(hdc);
 			break;
 		case ID_BUTTON5:
 			kolejnosc_pieter.push(1);
-			rysuj_czlowieka(hdc);
 			break;
 		case ID_BUTTON6:
 			kolejnosc_pieter.push(0);
-			rysuj_czlowieka(hdc);
 			break;
 		case ID_BUTTONP_panel:
 			kolejnosc_pieter.push(6);
-			rysuj_czlowieka(hdc);
 			break;
 		case ID_BUTTON1_panel:
 			kolejnosc_pieter.push(5);
-			rysuj_czlowieka(hdc);
 			break;
 		case ID_BUTTON2_panel:
 			kolejnosc_pieter.push(4);
-			rysuj_czlowieka(hdc);
 			break;
 		case ID_BUTTON3_panel:
 			kolejnosc_pieter.push(3);
-			rysuj_czlowieka(hdc);
 			break;
 		case ID_BUTTON4_panel:
 			kolejnosc_pieter.push(2);
-			rysuj_czlowieka(hdc);
 			break;
 		case ID_BUTTON5_panel:
 			kolejnosc_pieter.push(1);
-			rysuj_czlowieka(hdc);
 			break;
 		case ID_BUTTON6_panel:
 			kolejnosc_pieter.push(0);
-			rysuj_czlowieka(hdc);
 			break;
 		case ID_BUTTON0_cz:
-			if (liczba_osob_w_windzie <=8 && winda_dziala(value)==false)
+			if (liczba_osob_w_windzie <= 8 && prawidlowa_wysokosc(value) == true)
 			liczba_osob_w_windzie = liczba_osob_w_windzie;
 			break;
 		case ID_BUTTON1_cz:
 
-			if (liczba_osob_w_windzie + 1 <= 8 && winda_dziala(value) == false)
+			if (liczba_osob_w_windzie + 1 <= 8 && prawidlowa_wysokosc(value) == true)
 			liczba_osob_w_windzie = liczba_osob_w_windzie + 1;
 			break;
 		case ID_BUTTON2_cz:
-			if (liczba_osob_w_windzie + 2 <= 8 && winda_dziala(value) == false)
+			if (liczba_osob_w_windzie + 2 <= 8 && prawidlowa_wysokosc(value) == true)
 			liczba_osob_w_windzie = liczba_osob_w_windzie + 2;
 			break;
 		case ID_BUTTON3_cz:
-			if (liczba_osob_w_windzie + 3 <= 8 && winda_dziala(value) == false)
+			if (liczba_osob_w_windzie + 3 <= 8 && prawidlowa_wysokosc(value) == true)
 			liczba_osob_w_windzie = liczba_osob_w_windzie + 3;
 			break;
 		case ID_BUTTON4_cz:
-			if (liczba_osob_w_windzie + 4 <= 8 && winda_dziala(value) == false)
+			if (liczba_osob_w_windzie + 4 <= 8 && prawidlowa_wysokosc(value) == true)
 			liczba_osob_w_windzie = liczba_osob_w_windzie + 4;
 			break;
 		case ID_BUTTON5_cz:
-			if (liczba_osob_w_windzie + 5 <= 8 && winda_dziala(value) == false)
+			if (liczba_osob_w_windzie + 5 <= 8 && prawidlowa_wysokosc(value) == true)
 			liczba_osob_w_windzie = liczba_osob_w_windzie + 5;
 			break;
 		case ID_BUTTON6_cz:
-			if (liczba_osob_w_windzie + 6 <= 8 && winda_dziala(value) == false)
+			if (liczba_osob_w_windzie + 6 <= 8 && prawidlowa_wysokosc(value) == true)
 			liczba_osob_w_windzie = liczba_osob_w_windzie + 6;
 			break;
 		case ID_BUTTON7_cz:
-			if (liczba_osob_w_windzie + 7 <= 8 && winda_dziala(value) == false)
+			if (liczba_osob_w_windzie + 7 <= 8 && prawidlowa_wysokosc(value) == true)
 			liczba_osob_w_windzie = liczba_osob_w_windzie + 7;
 			break;
 		case ID_BUTTON8_cz:
-			if (liczba_osob_w_windzie + 8 <= 8 && winda_dziala(value) == false)
+			if (liczba_osob_w_windzie + 8 <= 8 && prawidlowa_wysokosc(value) == true)
 			liczba_osob_w_windzie = liczba_osob_w_windzie + 8;
             break;
 		case ID_BUTTON0_wys:
-			if (liczba_osob_w_windzie >= 0 && winda_dziala(value) == false)
+			if (liczba_osob_w_windzie >= 0 && prawidlowa_wysokosc(value) == true)
 			liczba_osob_w_windzie = liczba_osob_w_windzie;
 			break;
 		case ID_BUTTON1_wys:
-			if (liczba_osob_w_windzie - 1 >= 0 && winda_dziala(value) == false)
+			if (liczba_osob_w_windzie - 1 >= 0 && prawidlowa_wysokosc(value) == true)
 			liczba_osob_w_windzie = liczba_osob_w_windzie - 1;
 			break;
 		case ID_BUTTON2_wys:
-			if (liczba_osob_w_windzie - 2 >= 0 && winda_dziala(value) == false)
+			if (liczba_osob_w_windzie - 2 >= 0 && prawidlowa_wysokosc(value) == true)
 			liczba_osob_w_windzie = liczba_osob_w_windzie - 2;
 			break;
 		case ID_BUTTON3_wys:
-			if (liczba_osob_w_windzie - 3 >= 0 && winda_dziala(value) == false)
+			if (liczba_osob_w_windzie - 3 >= 0 && prawidlowa_wysokosc(value) == true)
 			liczba_osob_w_windzie = liczba_osob_w_windzie - 3;
 			break;
 		case ID_BUTTON4_wys:
-			if (liczba_osob_w_windzie - 4 >= 0 && winda_dziala(value) == false)
+			if (liczba_osob_w_windzie - 4 >= 0 && prawidlowa_wysokosc(value) == true)
 			liczba_osob_w_windzie = liczba_osob_w_windzie - 4;
 			break;
 		case ID_BUTTON5_wys:
-			if (liczba_osob_w_windzie - 5 >= 0 && winda_dziala(value) == false)
+			if (liczba_osob_w_windzie - 5 >= 0 && prawidlowa_wysokosc(value) == true)
 			liczba_osob_w_windzie = liczba_osob_w_windzie - 5;
 			break;
 		case ID_BUTTON6_wys:
-			if (liczba_osob_w_windzie - 6 >= 0 && winda_dziala(value) == false)
+			if (liczba_osob_w_windzie - 6 >= 0 && prawidlowa_wysokosc(value) == true)
 			liczba_osob_w_windzie = liczba_osob_w_windzie - 6;
 			break;
 		case ID_BUTTON7_wys:
-			if (liczba_osob_w_windzie - 7 >= 0 && winda_dziala(value) == false)
+			if (liczba_osob_w_windzie - 7 >= 0 && prawidlowa_wysokosc(value) == true)
 			liczba_osob_w_windzie = liczba_osob_w_windzie - 7;
 			break;
 		case ID_BUTTON8_wys:
-			if (liczba_osob_w_windzie - 8 >= 0 && winda_dziala(value) == false)
+			if (liczba_osob_w_windzie - 8 >= 0 && prawidlowa_wysokosc(value) == true)
 			liczba_osob_w_windzie = liczba_osob_w_windzie - 8;
 			break;
 		default:
