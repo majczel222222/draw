@@ -17,13 +17,13 @@ TCHAR szTitle[MAX_LOADSTRING];					// The title bar text
 TCHAR szWindowClass[MAX_LOADSTRING];			// the main window class name
 HWND hwndButton;
 HWND hWnd;
+MSG nMsg;
 
 INT value = 590;
 queue  <int> kolejnosc_pieter;
 INT x = 0;
 const WORD ID_TIMER = 1;
 int liczba_osob_w_windzie = 0;
-int licz_sekundy = 0;
 int licznik = 0;
 
 // Forward declarations of functions included in this code module:
@@ -34,6 +34,11 @@ INT_PTR CALLBACK	About(HWND, UINT, WPARAM, LPARAM);
 
 RECT drawArea1 = { 97, 8, 158, 672 };
 
+void CALLBACK zjedz_w_dol(HWND hWnd, UINT nMsg, UINT nIDEvent, DWORD dwTime)
+{
+	kolejnosc_pieter.push(6);
+	KillTimer(NULL, 1);
+}
 
 void rysuj_czlowieka(HDC &hdc)
 {
@@ -97,13 +102,8 @@ void MyOnPaint(HDC hdc)
 	
 	if (prawidlowa_wysokosc(value) == true && liczba_osob_w_windzie == 0)
 	{
-		licznik++;
+		SetTimer(NULL, ID_TIMER, 500, &zjedz_w_dol);
 	}
-	else
-	{
-		licznik = 0;
-	}
-	
 
 	
 	graphics.DrawLine(&pen_sciana, 97, 0, 97, 674);
@@ -150,6 +150,7 @@ void MyOnPaint(HDC hdc)
 
 	rysuj_czlowieka(hdc);
 }
+
 
 
 int OnCreate(HWND window)
@@ -274,10 +275,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 void repaintWindow(HWND hWnd, HDC &hdc, PAINTSTRUCT &ps, RECT *drawArea, LPARAM lParam)
 {
-	if (licznik == 200)
-	{
-		kolejnosc_pieter.push(6);
-	}
+	
 	if (drawArea == NULL)
 		InvalidateRect(hWnd, NULL, TRUE); // repaint all
 	else
