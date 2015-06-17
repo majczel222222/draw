@@ -4,8 +4,9 @@
 #include "stdafx.h"
 #include "draw.h"
 #include <queue>;
-using namespace std;
+#include <windows.h>
 
+using namespace std;
 
 #define MAX_LOADSTRING 100
 #define TMR_1 1
@@ -22,8 +23,10 @@ HWND window;
 INT value = 590;
 queue  <int> kolejnosc_pieter;
 INT x = 0;
+const WORD ID_TIMER = 1;
 int liczba_osob_w_windzie = 0;
 int licz_sekundy = 0;
+int licznik = 0;
 
 // Forward declarations of functions included in this code module:
 ATOM				MyRegisterClass(HINSTANCE hInstance);
@@ -32,8 +35,6 @@ LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK	About(HWND, UINT, WPARAM, LPARAM);
 
 RECT drawArea1 = { 97, 8, 158, 672 };
-
-
 
 
 void rysuj_czlowieka(HDC &hdc)
@@ -65,8 +66,11 @@ bool prawidlowa_wysokosc(int value)
 }
 
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> origin/master
 void MyOnPaint(HDC hdc)
 {
 
@@ -98,6 +102,7 @@ void MyOnPaint(HDC hdc)
 	Pen pen_lina(Color(255, 0, 0, 255), 2);
 	Pen pen_pietro(Color(255, 0, 0, 255), 8);
 	
+<<<<<<< HEAD
 
 
 /*	if (prawidlowa_wysokosc(value) == true && liczba_osob_w_windzie == 0)
@@ -105,6 +110,19 @@ void MyOnPaint(HDC hdc)
 		kolejnosc_pieter.push(6);
 	}*/
 
+=======
+	if (prawidlowa_wysokosc(value) == true && liczba_osob_w_windzie == 0)
+	{
+		licznik++;
+	}
+	else
+	{
+		licznik = 0;
+	}
+	
+
+	
+>>>>>>> origin/master
 	graphics.DrawLine(&pen_sciana, 97, 0, 97, 674);
 	graphics.DrawLine(&pen_sciana, 158, 0, 158, 674);
 	graphics.DrawLine(&pen_lina, 127, 8, 127, 10 + value);
@@ -149,8 +167,6 @@ void MyOnPaint(HDC hdc)
 
 	rysuj_czlowieka(hdc);
 }
-
-
 
 
 int OnCreate(HWND window)
@@ -279,6 +295,10 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 void repaintWindow(HWND hWnd, HDC &hdc, PAINTSTRUCT &ps, RECT *drawArea, LPARAM lParam)
 {
+	if (licznik == 200)
+	{
+		kolejnosc_pieter.push(6);
+	}
 	if (drawArea == NULL)
 		InvalidateRect(hWnd, NULL, TRUE); // repaint all
 	else
