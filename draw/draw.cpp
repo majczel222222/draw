@@ -9,6 +9,7 @@ using namespace std;
 
 #define MAX_LOADSTRING 100
 #define TMR_1 1
+#define TMR_2 2
 
 // Global Variables:
 HINSTANCE hInst;								// current instance
@@ -16,6 +17,7 @@ TCHAR szTitle[MAX_LOADSTRING];					// The title bar text
 TCHAR szWindowClass[MAX_LOADSTRING];			// the main window class name
 HWND hwndButton;
 HWND hWnd;
+HWND window;
 
 INT value = 590;
 queue  <int> kolejnosc_pieter;
@@ -57,10 +59,11 @@ bool prawidlowa_wysokosc(int value)
 			prawidlowa_wysokosc = true;
 	}
 
-	if (prawidlowa_wysokosc == true)
-		return true;
+	if (prawidlowa_wysokosc == true) 
+		return true, SetTimer(window, TMR_2, 5000, 0);
 	else return false;
 }
+
 
 
 
@@ -95,16 +98,12 @@ void MyOnPaint(HDC hdc)
 	Pen pen_lina(Color(255, 0, 0, 255), 2);
 	Pen pen_pietro(Color(255, 0, 0, 255), 8);
 	
-	if (prawidlowa_wysokosc(value) == true  && liczba_osob_w_windzie == 0)
-	{
-		licz_sekundy++;
-	}
-	else
-	{
-		licz_sekundy = 0;
-	}
 
-	if (licz_sekundy == 157){ kolejnosc_pieter.push(6); }
+
+/*	if (prawidlowa_wysokosc(value) == true && liczba_osob_w_windzie == 0)
+	{
+		kolejnosc_pieter.push(6);
+	}*/
 
 	graphics.DrawLine(&pen_sciana, 97, 0, 97, 674);
 	graphics.DrawLine(&pen_sciana, 158, 0, 158, 674);
@@ -157,6 +156,10 @@ void MyOnPaint(HDC hdc)
 int OnCreate(HWND window)
 {
    SetTimer(window, TMR_1, 25, 0);
+   if (prawidlowa_wysokosc(value) == true && liczba_osob_w_windzie == 0){
+	   SetTimer(window, TMR_2, 5000, 0);
+	   kolejnosc_pieter.push(6);
+   }
    return 0;
 }
 
@@ -515,10 +518,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_TIMER:
 		switch (wParam)
 		{
-			case TMR_1:
-				//force window to repaint
-				repaintWindow(hWnd, hdc, ps, &drawArea1, lParam);
+		case TMR_1:
+			//force window to repaint
+			repaintWindow(hWnd, hdc, ps, &drawArea1, lParam);
 			break;
+
 		}
 
 	default:
